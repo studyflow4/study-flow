@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPeak - Conquer Your Academic Summit</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Three.js for 3D Roadmap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    },
+                    colors: {
+                        peak: {
+                            gold: '#f3ca65',
+                            emerald: '#10392b',
+                            dark: '#07120e',
+                            slate: '#16231e',
+                            accent: '#34d399',
+                            sage: '#81A684'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07120e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(52, 211, 153, 0.25);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(52, 211, 153, 0.5);
+        }
+
+        /* Hero Fullscreen Scenic Graduate Mountain Background */
+        .hero-bg {
+            background-image: linear-gradient(
+                to bottom,
+                rgba(7, 18, 14, 0.65) 0%,
+                rgba(7, 18, 14, 0.4) 40%,
+                rgba(7, 18, 14, 0.88) 85%,
+                rgba(7, 18, 14, 1) 100%
+            ), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(16, 35, 28, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card {
+            background: rgba(22, 35, 30, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(243, 202, 101, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Active Navigation Tab Styling */
+        .view-section {
+            display: none;
+        }
+        .view-section.active {
+            display: flex;
+        }
+
+        /* Glowing Pulse for Ringing Alarms */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .alarm-ringing {
+            animation: pulseGlow 1.5s infinite;
+            border-color: #ef4444 !important;
+        }
+    </style>
+</head>
+<body class="bg-peak-dark text-slate-100 font-sans min-h-screen selection:bg-peak-gold selection:text-peak-dark overflow-x-hidden">
+
+    <!-- Full-screen Hero Header Section -->
+    <header class="relative min-h-screen flex flex-col justify-between hero-bg px-6 sm:px-12 lg:px-20 py-8">
+        
+        <!-- Navbar -->
+        <nav class="flex items-center justify-between w-full max-w-7xl mx-auto z-20">
+            <!-- Brand Logo with Byline -->
+            <a href="#" class="flex items-center space-x-3 text-white group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-peak-gold via-emerald-400 to-peak-accent flex items-center justify-center text-peak-dark text-xl font-black shadow-lg">
+                    <i class="fa-solid fa-mountain-sun"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-black tracking-tight font-serif text-white">Study<span class="text-peak-gold italic">Peak</span></span>
+                    <span class="block text-[10px] text-peak-gold/80 font-medium tracking-wider -mt-1">by isitha prabashana</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-8 text-xs font-semibold tracking-wider uppercase text-slate-200">
+                <a href="#appDashboard" onclick="switchTab('calendar')" class="hover:text-peak-gold transition-colors">Timetable</a>
+                <a href="#appDashboard" onclick="switchTab('library')" class="hover:text-peak-gold transition-colors">Study Vault</a>
+                <a href="#appDashboard" onclick="switchTab('roadmap')" class="hover:text-peak-gold transition-colors">3D Journey</a>
+                <a href="#appDashboard" onclick="switchTab('analytics')" class="hover:text-peak-gold transition-colors">Analytics</a>
+                <a href="#appDashboard" onclick="switchTab('goals')" class="hover:text-peak-gold transition-colors">Goals</a>
+            </div>
+
+            <!-- Social Media Icons & Action Button -->
+            <div class="flex items-center space-x-5">
+                <div class="hidden sm:flex items-center space-x-4 text-slate-300 text-sm">
+                    <a href="#" class="hover:text-peak-gold transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-peak-gold transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-peak-gold transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+                <a href="#appDashboard" class="bg-white hover:bg-peak-gold text-peak-dark font-extrabold text-xs px-5 py-2.5 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center space-x-2">
+                    <span>Explore Workspace</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Hero Title & Content -->
+        <div class="max-w-4xl my-auto py-16 z-10 space-y-6">
+            
+            <!-- Social Proof Avatar Group Badge -->
+            <div class="inline-flex items-center space-x-3 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+                <div class="flex -space-x-2 overflow-hidden">
+                    <img class="inline-block h-7 w-7 rounded-full ring-2 ring-peak-dark object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Student">
+                    <img class="inline-block h-7 w-7 rounded-full ring-2 ring-peak-dark object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Student">
+                    <img class="inline-block h-7 w-7 rounded-full ring-2 ring-peak-dark object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Student">
+                </div>
+                <span class="text-xs font-semibold text-slate-200">Trusted by <strong class="text-peak-gold">10,000+</strong> scholars & top graduates</span>
+            </div>
+
+            <!-- Big Main Headline -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white font-serif leading-[1.1] tracking-tight">
+                Conquer Your <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-peak-gold to-emerald-300">Academic Summit.</span>
+            </h1>
+
+            <!-- Subheading Text -->
+            <p class="text-base sm:text-lg text-slate-200/90 font-normal max-w-xl leading-relaxed">
+                Empower your learning journey from foundation to graduate excellence with mindful time planning, video vault, smart alarms, and interactive analytics.
+            </p>
+
+            <!-- Call to Action Buttons -->
+            <div class="pt-4 flex flex-wrap items-center gap-4">
+                <a href="#appDashboard" class="bg-white hover:bg-peak-gold text-peak-dark font-extrabold text-sm px-8 py-4 rounded-full shadow-2xl transition-all transform hover:scale-105 flex items-center space-x-3">
+                    <span>Start Your Journey</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <button onclick="openGeminiModal()" class="bg-black/50 hover:bg-black/70 border border-white/20 text-white font-bold text-sm px-6 py-4 rounded-full backdrop-blur-md transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-sparkles text-peak-gold"></i>
+                    <span>Gemini AI Tutor</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="z-10 pb-4 text-center">
+            <a href="#appDashboard" class="text-xs uppercase tracking-widest text-slate-300/80 hover:text-peak-gold transition-colors flex flex-col items-center space-y-2">
+                <span>Scroll To Workspace</span>
+                <i class="fa-solid fa-chevron-down animate-bounce text-sm text-peak-gold"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Interactive Main Time Management Application Section -->
+    <section id="appDashboard" class="py-12 px-4 sm:px-8 lg:px-12 max-w-[1700px] mx-auto min-h-screen flex flex-col">
+        
+        <!-- Application Title Bar & Navigation Pills -->
+        <div class="glass-panel rounded-3xl p-4 sm:p-6 mb-8 flex flex-col lg:flex-row justify-between items-center gap-4">
+            
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-peak-emerald to-peak-slate border border-peak-gold/30 flex items-center justify-center text-peak-gold text-2xl font-bold shadow-md">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <h2 class="text-xl font-bold text-white font-serif">Interactive Academic Workspace</h2>
+                        <span class="text-[10px] bg-peak-gold/20 text-peak-gold px-2.5 py-0.5 rounded-full font-semibold border border-peak-gold/30">by isitha prabashana</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Real-time schedule, audio alerts, 3D progression, and learning resources.</p>
+                </div>
+            </div>
+
+            <!-- Live Clock & Test Chime -->
+            <div class="flex items-center space-x-4">
+                <div class="bg-black/40 px-4 py-2 rounded-2xl border border-white/10 text-right">
+                    <span class="block text-[10px] uppercase font-bold text-slate-400">System Time</span>
+                    <span id="liveClockDisplay" class="text-sm font-mono font-bold text-peak-gold">00:00:00 AM</span>
+                </div>
+                <button onclick="testAlarmChime()" class="bg-peak-gold/15 hover:bg-peak-gold/30 text-peak-gold border border-peak-gold/30 px-3.5 py-2 rounded-2xl text-xs font-bold transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Test Audio Alert</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Sidebar + Main Content Grid -->
+        <div class="flex flex-col lg:flex-row gap-6 flex-1">
+            
+            <!-- Category Sidebar -->
+            <aside class="w-full lg:w-72 glass-panel rounded-3xl p-5 flex flex-col justify-between shrink-0 space-y-6">
+                <div class="space-y-2">
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-3 mb-2">Workspace Modules</p>
+                    
+                    <button onclick="switchTab('calendar')" data-tab="calendar" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs transition-all bg-peak-gold text-peak-dark font-bold shadow-lg">
+                        <i class="fa-solid fa-calendar-days text-base"></i>
+                        <span>Timetable & Alarms</span>
+                    </button>
+
+                    <button onclick="switchTab('library')" data-tab="library" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-book-open-reader text-base"></i>
+                        <span>Study Materials Library</span>
+                    </button>
+
+                    <button onclick="switchTab('roadmap')" data-tab="roadmap" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-graduation-cap text-base"></i>
+                        <span>3D Student Journey</span>
+                    </button>
+
+                    <button onclick="switchTab('goals')" data-tab="goals" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-bullseye text-base"></i>
+                        <span>Goal Setter</span>
+                    </button>
+
+                    <button onclick="switchTab('analytics')" data-tab="analytics" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-chart-pie text-base"></i>
+                        <span>Study Analytics</span>
+                    </button>
+
+                    <button onclick="switchTab('profile')" data-tab="profile" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-user-gear text-base"></i>
+                        <span>Profile & Settings</span>
+                    </button>
+                </div>
+
+                <!-- AI Quick Banner -->
+                <div class="p-4 rounded-2xl bg-gradient-to-br from-black/60 to-peak-slate border border-white/10 space-y-3">
+                    <div class="flex items-center space-x-2 text-peak-gold text-xs font-bold">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <span>Gemini Study Partner</span>
+                    </div>
+                    <p class="text-[11px] text-slate-300 leading-snug">Ask AI to summarize PDF notes or construct custom study timelines.</p>
+                    <button onclick="openGeminiModal()" class="w-full bg-peak-gold hover:bg-white text-peak-dark font-extrabold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                        Ask Assistant
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Display View Container -->
+            <main class="flex-1 glass-panel rounded-3xl overflow-hidden flex flex-col min-h-[600px]">
+                
+                <!-- Module 1: Timetable & Alarms -->
+                <div id="view-calendar" class="view-section active flex-col flex-1 p-6 space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Schedule Flow</span>
+                            <h3 class="text-2xl font-bold text-white font-serif">Timetable & Active Alarms</h3>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button onclick="toggleAllAlarms(true)" class="px-3 py-1.5 bg-emerald-500/20 text-emerald-300 rounded-xl border border-emerald-500/30 text-xs font-bold hover:bg-emerald-500/30">ALL ALARMS ON</button>
+                            <button onclick="openTimeSlotModal()" class="bg-peak-gold text-peak-dark font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all flex items-center space-x-1.5">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add Slot</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Control (FIXED: ID matches JS selector) -->
+                    <div class="flex items-center justify-between bg-black/30 p-3 rounded-2xl border border-white/10">
+                        <label class="text-xs font-bold text-slate-300 flex items-center space-x-2">
+                            <i class="fa-solid fa-filter text-peak-gold"></i>
+                            <span>Filter Time Blocks:</span>
+                        </label>
+                        <select id="scheduleFilter" onchange="renderSchedule()" class="bg-black/60 border border-white/10 text-white text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:border-peak-gold">
+                            <option value="ALL">All Categories</option>
+                            <option value="Study">Study / Focus</option>
+                            <option value="Routine">Routine</option>
+                            <option value="Break">Break</option>
+                        </select>
+                    </div>
+
+                    <!-- Schedule Items List Container -->
+                    <div id="scheduleContainer" class="space-y-3"></div>
+                </div>
+
+                <!-- Module 2: Study Materials Library -->
+                <div id="view-library" class="view-section flex-col flex-1 p-6 space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Learning Resources</span>
+                            <h3 class="text-2xl font-bold text-white font-serif">Study Vault & Video Guides</h3>
+                        </div>
+                        <button onclick="openResourceModal()" class="bg-peak-gold text-peak-dark font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all flex items-center space-x-1.5">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add Material</span>
+                        </button>
+                    </div>
+
+                    <!-- Library Resource Cards Grid -->
+                    <div id="materialsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+
+                <!-- Module 3: 3D Student Journey Roadmap -->
+                <div id="view-roadmap" class="view-section flex-col flex-1 p-6 space-y-6">
+                    <div class="pb-4 border-b border-white/10">
+                        <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Academic Milestone Path</span>
+                        <h3 class="text-2xl font-bold text-white font-serif">3D Student Growth Journey</h3>
+                        <p class="text-xs text-slate-400 mt-1">Interactive 3D visualization from Early Scholar to University Graduate.</p>
+                    </div>
+
+                    <div class="w-full h-[420px] rounded-2xl bg-black/40 border border-white/10 overflow-hidden relative">
+                        <canvas id="roadmapCanvas" class="w-full h-full"></canvas>
+                        <div class="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-xl border border-white/10 text-xs text-slate-300 flex justify-between items-center">
+                            <span><i class="fa-solid fa-graduation-cap text-peak-gold mr-2"></i>Stage: University Advanced Research</span>
+                            <span class="font-bold text-peak-gold">85% Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 4: Goal Setter -->
+                <div id="view-goals" class="view-section flex-col flex-1 p-6 space-y-6">
+                    <div class="flex justify-between items-center pb-4 border-b border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Targets</span>
+                            <h3 class="text-2xl font-bold text-white font-serif">Academic Goal Setter</h3>
+                        </div>
+                        <button onclick="openGoalModal()" class="bg-peak-gold text-peak-dark font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all">+ Add Target Goal</button>
+                    </div>
+
+                    <div id="goalsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+                </div>
+
+                <!-- Module 5: Analytics -->
+                <div id="view-analytics" class="view-section flex-col flex-1 p-6 space-y-6">
+                    <div class="pb-4 border-b border-white/10">
+                        <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Performance Insights</span>
+                        <h3 class="text-2xl font-bold text-white font-serif">Study & Focus Analytics</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="glass-card rounded-2xl p-5">
+                            <h4 class="font-bold text-white text-xs mb-4 uppercase"><i class="fa-solid fa-chart-line text-peak-gold mr-2"></i>Weekly Focused Hours</h4>
+                            <div class="h-60 relative"><canvas id="weeklyChart"></canvas></div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-5">
+                            <h4 class="font-bold text-white text-xs mb-4 uppercase"><i class="fa-solid fa-chart-pie text-emerald-400 mr-2"></i>Subject Distribution</h4>
+                            <div class="h-60 relative"><canvas id="subjectChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 6: Profile -->
+                <div id="view-profile" class="view-section flex-col flex-1 p-6 max-w-2xl">
+                    <h3 class="text-2xl font-bold text-white font-serif mb-6 pb-4 border-b border-white/10">Profile Preferences</h3>
+                    <form onsubmit="saveProfile(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Scholar Full Name</label>
+                            <input type="text" id="profName" value="Isitha Prabashana" class="w-full bg-black/50 border border-white/10 text-white text-xs rounded-xl p-3 focus:outline-none focus:border-peak-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Academic Level / Major</label>
+                            <input type="text" id="profLevel" value="Undergraduate Physics & CS" class="w-full bg-black/50 border border-white/10 text-white text-xs rounded-xl p-3 focus:outline-none focus:border-peak-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Target Hours / Day</label>
+                            <input type="number" id="profHours" value="8" class="w-full bg-black/50 border border-white/10 text-white text-xs rounded-xl p-3 focus:outline-none focus:border-peak-gold">
+                        </div>
+                        <button type="submit" class="bg-peak-gold text-peak-dark font-extrabold px-6 py-2.5 rounded-xl text-xs shadow-lg">Save Preferences</button>
+                    </form>
+                </div>
+
+            </main>
+        </div>
+    </section>
+
+    <!-- Audio Alarm Alert Modal -->
+    <div id="alarmModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card alarm-ringing rounded-3xl max-w-md w-full p-6 text-center space-y-4 border border-red-500/50">
+            <div class="w-16 h-16 mx-auto rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-3xl animate-bounce">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <div>
+                <span class="text-[10px] font-bold uppercase text-red-400 tracking-wider">Active Time Block Alert</span>
+                <h3 id="alarmTitle" class="text-2xl font-bold text-white font-serif mt-1">Deep Physics Study</h3>
+                <p id="alarmTime" class="text-xs text-slate-300 font-mono mt-1">08:30 AM - 11:30 AM</p>
+            </div>
+            <div class="flex space-x-3 pt-2">
+                <button onclick="dismissAlarm()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-lg">Dismiss Alert</button>
+                <button onclick="dismissAlarm()" class="w-full bg-black/50 border border-white/10 text-white font-bold py-2.5 rounded-xl text-xs">Snooze 5 Min</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gemini AI Assistant Modal -->
+    <div id="geminiModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl max-w-2xl w-full h-[580px] flex flex-col border border-peak-gold/30 overflow-hidden">
+            <div class="p-4 bg-black/60 border-b border-white/10 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-peak-gold flex items-center justify-center text-peak-dark font-bold">
+                        <i class="fa-solid fa-sparkles"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm font-serif">Gemini Study Tutor</h4>
+                        <p class="text-[10px] text-slate-400">Intelligent Academic Clarifications</p>
+                    </div>
+                </div>
+                <button onclick="closeGeminiModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div id="geminiChatLog" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+                <div class="bg-black/40 border border-white/10 p-3.5 rounded-2xl max-w-[85%] text-slate-200">
+                    🏔️ Greetings Scholar! How can I support your study flow today? You can ask me to draft revision plans or simplify complex academic topics.
+                </div>
+            </div>
+
+            <form onsubmit="handleGeminiQuery(event)" class="p-3 bg-black/60 border-t border-white/10 flex space-x-2">
+                <input type="text" id="geminiInput" placeholder="Ask your study question..." required class="flex-1 bg-black/80 border border-white/10 text-white text-xs rounded-xl px-4 py-2.5 focus:outline-none focus:border-peak-gold">
+                <button type="submit" class="bg-peak-gold text-peak-dark font-extrabold px-4 py-2.5 rounded-xl text-xs">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Form: Add Time Block -->
+    <div id="slotModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card rounded-3xl max-w-md w-full p-6 border border-white/20 space-y-4">
+            <h3 class="font-bold text-white text-base font-serif">Add Schedule Block</h3>
+            <form onsubmit="saveSlot(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Title</label>
+                    <input type="text" id="slotTitle" required placeholder="Quantum Mechanics Focus" class="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Start Time</label>
+                        <input type="text" id="slotStart" required placeholder="08:30 AM" class="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">End Time</label>
+                        <input type="text" id="slotEnd" required placeholder="10:30 AM" class="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Category</label>
+                    <select id="slotCat" class="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                        <option value="Study">Study / Focus</option>
+                        <option value="Routine">Routine</option>
+                        <option value="Break">Break</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeTimeSlotModal()" class="px-4 py-2 text-xs text-slate-400">Cancel</button>
+                    <button type="submit" class="bg-peak-gold text-peak-dark font-bold px-5 py-2 rounded-xl text-xs">Save Slot</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        /* Initial Datasets */
+        const initialSchedule = [
+            { id: 1, title: 'Morning Academic Prep', start: '07:00 AM', end: '07:30 AM', category: 'Routine', alarm: true, icon: 'fa-mug-hot' },
+            { id: 2, title: 'Deep Study: Advanced Physics', start: '08:30 AM', end: '11:30 AM', category: 'Study', alarm: true, icon: 'fa-atom' },
+            { id: 3, title: 'Lunch & Scenic Walk', start: '12:00 PM', end: '01:00 PM', category: 'Break', alarm: false, icon: 'fa-utensils' },
+            { id: 4, title: 'Research Lab & Mathematics', start: '02:00 PM', end: '04:30 PM', category: 'Study', alarm: true, icon: 'fa-square-root-variable' }
+        ];
+
+        const initialMaterials = [
+            { id: 1, title: 'Quantum Electrodynamics Lecture', subject: 'Physics', type: 'video', url: 'https://www.youtube.com/embed/QuR969uMICM' },
+            { id: 2, title: 'Advanced Multivariable Calculus Guide', subject: 'Mathematics', type: 'pdf', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf' }
+        ];
+
+        const initialGoals = [
+            { id: 1, title: 'Complete Physics Thesis Chapter 3', progress: 75, deadline: 'Oct 15' },
+            { id: 2, title: 'Master 50 Calculus Integration Theorems', progress: 40, deadline: 'Nov 01' }
+        ];
+
+        let schedule = JSON.parse(localStorage.getItem('sp_schedule')) || initialSchedule;
+        let materials = JSON.parse(localStorage.getItem('sp_materials')) || initialMaterials;
+        let goals = JSON.parse(localStorage.getItem('sp_goals')) || initialGoals;
+        
+        let audioCtx = null;
+        let alarmInterval = null;
+
+        window.onload = function() {
+            renderSchedule();
+            renderMaterials();
+            renderGoals();
+            init3DRoadmap();
+            startClock();
+        };
+
+        function saveState() {
+            localStorage.setItem('sp_schedule', JSON.stringify(schedule));
+            localStorage.setItem('sp_materials', JSON.stringify(materials));
+            localStorage.setItem('sp_goals', JSON.stringify(goals));
+        }
+
+        /* Web Audio API Chime Ringtone */
+        function playChimeSound() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(528, now); // 528Hz Solfeggio frequency
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 1.5);
+            } catch (e) { console.log(e); }
+        }
+
+        function testAlarmChime() {
+            playChimeSound();
+        }
+
+        function startClock() {
+            function update() {
+                const now = new Date();
+                const str = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                const clockEl = document.getElementById('liveClockDisplay');
+                if (clockEl) clockEl.innerText = str;
+
+                const shortTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                schedule.forEach(block => {
+                    if (block.alarm && block.start === shortTime && !block.triggered) {
+                        block.triggered = true;
+                        triggerAlarmModal(block);
+                    }
+                });
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        function triggerAlarmModal(block) {
+            playChimeSound();
+            if (alarmInterval) clearInterval(alarmInterval);
+            alarmInterval = setInterval(playChimeSound, 2500);
+
+            document.getElementById('alarmTitle').innerText = block.title;
+            document.getElementById('alarmTime').innerText = `${block.start} - ${block.end}`;
+            document.getElementById('alarmModal').classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function dismissAlarm() {
+            if (alarmInterval) clearInterval(alarmInterval);
+            document.getElementById('alarmModal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        /* Switch Modules UI */
+        function switchTab(tabId) {
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.className = 'tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all';
+            });
+
+            const targetView = document.getElementById(`view-${tabId}`);
+            if (targetView) targetView.classList.add('active');
+
+            const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+            if (activeBtn) {
+                activeBtn.className = 'tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs transition-all bg-peak-gold text-peak-dark font-bold shadow-lg';
+            }
+
+            if (tabId === 'analytics') initAnalyticsCharts();
+        }
+
+        /* Timetable Logic */
+        function renderSchedule() {
+            const container = document.getElementById('scheduleContainer');
+            if (!container) return;
+
+            // Defensive check for scheduleFilter element
+            const filterEl = document.getElementById('scheduleFilter');
+            const filter = filterEl ? filterEl.value : 'ALL';
+
+            container.innerHTML = '';
+            const filtered = filter === 'ALL' ? schedule : schedule.filter(s => s.category === filter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 p-4 text-center">No time blocks found for this category.</p>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-peak-gold';
+                card.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-xl bg-peak-gold/20 text-peak-gold flex items-center justify-center font-bold">
+                            <i class="fa-solid ${item.icon || 'fa-book'}"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-peak-gold uppercase font-bold">${item.start} - ${item.end}</span>
+                            <h4 class="font-bold text-white text-sm font-serif">${item.title}</h4>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="toggleSlotAlarm(${item.id})" class="px-3 py-1 rounded-xl text-xs font-bold ${item.alarm ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-black/40 text-slate-500'}">
+                            <i class="fa-solid fa-bell mr-1"></i>${item.alarm ? 'ON' : 'OFF'}
+                        </button>
+                        <button onclick="deleteSlot(${item.id})" class="text-slate-500 hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleSlotAlarm(id) {
+            schedule = schedule.map(s => s.id === id ? { ...s, alarm: !s.alarm } : s);
+            saveState();
+            renderSchedule();
+        }
+
+        function toggleAllAlarms(state) {
+            schedule = schedule.map(s => ({ ...s, alarm: state }));
+            saveState();
+            renderSchedule();
+        }
+
+        function openTimeSlotModal() { document.getElementById('slotModal').classList.remove('opacity-0', 'pointer-events-none'); }
+        function closeTimeSlotModal() { document.getElementById('slotModal').classList.add('opacity-0', 'pointer-events-none'); }
+
+        function saveSlot(e) {
+            e.preventDefault();
+            schedule.push({
+                id: Date.now(),
+                title: document.getElementById('slotTitle').value,
+                start: document.getElementById('slotStart').value,
+                end: document.getElementById('slotEnd').value,
+                category: document.getElementById('slotCat').value,
+                alarm: true,
+                icon: 'fa-book'
+            });
+            saveState();
+            renderSchedule();
+            closeTimeSlotModal();
+        }
+
+        function deleteSlot(id) {
+            schedule = schedule.filter(s => s.id !== id);
+            saveState();
+            renderSchedule();
+        }
+
+        /* Library Logic */
+        function renderMaterials() {
+            const container = document.getElementById('materialsGrid');
+            if (!container) return;
+            container.innerHTML = '';
+            materials.forEach(mat => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-4 flex flex-col justify-between space-y-3';
+                card.innerHTML = `
+                    <div>
+                        <span class="text-[10px] font-bold uppercase text-peak-gold px-2 py-0.5 rounded bg-peak-gold/10">${mat.subject}</span>
+                        <h4 class="font-bold text-white text-xs font-serif mt-2">${mat.title}</h4>
+                    </div>
+                    <div class="flex items-center justify-between pt-2 border-t border-white/10">
+                        <span class="text-[10px] text-slate-400 font-mono uppercase">${mat.type}</span>
+                        <a href="${mat.url}" target="_blank" class="text-xs text-peak-gold font-bold hover:underline">Open <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openResourceModal() {
+            alert('To add a resource, please paste a valid YouTube or PDF URL.');
+        }
+
+        /* Goals Logic */
+        function renderGoals() {
+            const container = document.getElementById('goalsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            goals.forEach(goal => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-5 space-y-3';
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-white text-sm font-serif">${goal.title}</h4>
+                        <span class="text-xs font-mono text-peak-gold font-bold">${goal.progress}%</span>
+                    </div>
+                    <div class="w-full bg-black/50 h-2.5 rounded-full overflow-hidden border border-white/10">
+                        <div class="bg-gradient-to-r from-peak-gold to-emerald-400 h-full transition-all" style="width: ${goal.progress}%"></div>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Target Deadline: ${goal.deadline}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openGoalModal() {
+            const title = prompt('Enter Target Goal Title:');
+            if (title) {
+                goals.push({ id: Date.now(), title, progress: 0, deadline: 'TBD' });
+                saveState();
+                renderGoals();
+            }
+        }
+
+        /* 3D Student Journey Canvas Engine */
+        function init3DRoadmap() {
+            const canvas = document.getElementById('roadmapCanvas');
+            if (!canvas) return;
+
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x07120e, 0.08);
+
+            const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            camera.position.set(0, 0, 7);
+
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+            const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambient);
+
+            const dirLight = new THREE.DirectionalLight(0xf3ca65, 1.2);
+            dirLight.position.set(5, 5, 5);
+            scene.add(dirLight);
+
+            // Path Ribbon Geometry
+            const points = [
+                new THREE.Vector3(-4, -1, 0),
+                new THREE.Vector3(-1.5, 0.5, 1),
+                new THREE.Vector3(1.5, -0.5, -0.5),
+                new THREE.Vector3(4, 1, 0)
+            ];
+            const curve = new THREE.CatmullRomCurve3(points);
+            const tube = new THREE.Mesh(
+                new THREE.TubeGeometry(curve, 64, 0.1, 8, false),
+                new THREE.MeshStandardMaterial({ color: 0x34d399, roughness: 0.3 })
+            );
+            scene.add(tube);
+
+            // Floating Nodes
+            points.forEach((p, idx) => {
+                const node = new THREE.Mesh(
+                    new THREE.OctahedronGeometry(0.4, 0),
+                    new THREE.MeshStandardMaterial({ color: idx === 2 ? 0xf3ca65 : 0x34d399 })
+                );
+                node.position.copy(p);
+                scene.add(node);
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        /* Gemini AI Tutor Logic */
+        function openGeminiModal() { document.getElementById('geminiModal').classList.remove('opacity-0', 'pointer-events-none'); }
+        function closeGeminiModal() { document.getElementById('geminiModal').classList.add('opacity-0', 'pointer-events-none'); }
+
+        function handleGeminiQuery(e) {
+            e.preventDefault();
+            const input = document.getElementById('geminiInput');
+            const txt = input.value.trim();
+            if (!txt) return;
+
+            const log = document.getElementById('geminiChatLog');
+            
+            const userBox = document.createElement('div');
+            userBox.className = 'bg-peak-gold/20 border border-peak-gold/30 p-3 rounded-2xl max-w-[85%] text-white ml-auto text-right';
+            userBox.innerText = txt;
+            log.appendChild(userBox);
+
+            input.value = '';
+
+            const aiBox = document.createElement('div');
+            aiBox.className = 'bg-black/40 border border-white/10 p-3 rounded-2xl max-w-[85%] text-peak-gold';
+            aiBox.innerText = '🏔️ Gemini AI Tutor is generating insight...';
+            log.appendChild(aiBox);
+
+            setTimeout(() => {
+                aiBox.innerText = `💡 Study Peak Guidance for "${txt}": Breakdown your revision into 30-minute intervals followed by active recall practice notes!`;
+            }, 1000);
+        }
+
+        /* Analytics Chart initialization */
+        let weeklyChartInstance = null;
+        let subjectChartInstance = null;
+
+        function initAnalyticsCharts() {
+            const wCtx = document.getElementById('weeklyChart');
+            const sCtx = document.getElementById('subjectChart');
+            if (!wCtx || !sCtx) return;
+
+            if (weeklyChartInstance) weeklyChartInstance.destroy();
+            if (subjectChartInstance) subjectChartInstance.destroy();
+
+            weeklyChartInstance = new Chart(wCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{ data: [6, 7.5, 5, 8, 6.5, 9, 7], backgroundColor: '#f3ca65', borderRadius: 8 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            subjectChartInstance = new Chart(sCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Physics', 'Maths', 'Chemistry'],
+                    datasets: [{ data: [45, 35, 20], backgroundColor: ['#f3ca65', '#34d399', '#ef4444'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            alert('Profile settings saved successfully!');
+        }
+    </script>
+</body>
+</html>
