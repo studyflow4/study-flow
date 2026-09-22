@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyPeak - Conquer Your Academic Summit</title>
+    <title>StudyPeak - Where Focus Blooms Under Starlight</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Three.js for 3D Roadmap -->
+    <!-- Three.js for 3D Scenes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
@@ -27,16 +27,20 @@
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif']
+                        serif: ['Playfair Display', 'serif'],
+                        garamond: ['Cormorant Garamond', 'serif']
                     },
                     colors: {
-                        peak: {
-                            gold: '#f3ca65',
-                            emerald: '#10392b',
-                            dark: '#07120e',
-                            slate: '#16231e',
-                            accent: '#34d399',
-                            sage: '#81A684'
+                        starlight: {
+                            deep: '#060a17',
+                            twilight: '#0f172a',
+                            navy: '#1e1b4b',
+                            gold: '#fef08a',
+                            amber: '#f59e0b',
+                            glow: '#fbbf24',
+                            lavender: '#c084fc',
+                            slate: '#334155',
+                            soft: '#94a3b8'
                         }
                     }
                 }
@@ -51,270 +55,356 @@
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #07120e;
+            background: #060a17;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(52, 211, 153, 0.25);
+            background: rgba(254, 240, 138, 0.25);
             border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(52, 211, 153, 0.5);
+            background: rgba(251, 191, 36, 0.6);
         }
 
-        /* Hero Fullscreen Scenic Graduate Mountain Background */
-        .hero-bg {
-            background-image: linear-gradient(
-                to bottom,
-                rgba(7, 18, 14, 0.65) 0%,
-                rgba(7, 18, 14, 0.4) 40%,
-                rgba(7, 18, 14, 0.88) 85%,
-                rgba(7, 18, 14, 1) 100%
-            ), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85');
-            background-size: cover;
-            background-position: center top;
+        /* Hero Starlight Night Backdrop */
+        .starlight-bg {
+            background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #0f172a 45%, #060a17 100%);
             background-attachment: fixed;
         }
 
-        /* Glassmorphism Panels */
-        .glass-panel {
-            background: rgba(16, 35, 28, 0.7);
+        /* Glassmorphism Lunora-Style Panels */
+        .glass-starlight {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
+
+        .glass-card-starlight {
+            background: rgba(30, 27, 75, 0.45);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(254, 240, 138, 0.15);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .glass-card {
-            background: rgba(22, 35, 30, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(52, 211, 153, 0.15);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .glass-card-starlight:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.15);
         }
 
-        .glass-card:hover {
-            border-color: rgba(243, 202, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Active Navigation Tab Styling */
+        /* Smooth View Section Fade Animations */
         .view-section {
             display: none;
-        }
-        .view-section.active {
-            display: flex;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Glowing Pulse for Ringing Alarms */
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+        .view-section.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glowing Starlight Halo Pulsing */
+        @keyframes floatGlow {
+            0% { transform: scale(1) translateY(0); opacity: 0.5; }
+            50% { transform: scale(1.08) translateY(-10px); opacity: 0.8; }
+            100% { transform: scale(1) translateY(0); opacity: 0.5; }
+        }
+
+        .starlight-halo {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, rgba(192, 132, 252, 0.08) 50%, transparent 70%);
+            animation: floatGlow 10s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* Fireflies animation */
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: #fef08a;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fef08a, 0 0 20px #f59e0b;
+            animation: fly 12s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(0, 0) scale(0.8); opacity: 0.2; }
+            25% { transform: translate(60px, -80px) scale(1.2); opacity: 0.9; }
+            50% { transform: translate(-40px, -150px) scale(0.6); opacity: 0.4; }
+            75% { transform: translate(80px, -220px) scale(1); opacity: 0.8; }
+            100% { transform: translate(0, -300px) scale(0.2); opacity: 0; }
+        }
+
+        /* Pulsing Alarm Glow */
+        @keyframes pulseAlarm {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); }
+            70% { box-shadow: 0 0 0 24px rgba(239, 68, 68, 0); }
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
         .alarm-ringing {
-            animation: pulseGlow 1.5s infinite;
+            animation: pulseAlarm 1.5s infinite;
             border-color: #ef4444 !important;
         }
     </style>
 </head>
-<body class="bg-peak-dark text-slate-100 font-sans min-h-screen selection:bg-peak-gold selection:text-peak-dark overflow-x-hidden">
+<body class="starlight-bg text-slate-100 font-sans min-h-screen selection:bg-starlight-gold selection:text-starlight-deep overflow-x-hidden relative">
 
-    <!-- Full-screen Hero Header Section -->
-    <header class="relative min-h-screen flex flex-col justify-between hero-bg px-6 sm:px-12 lg:px-20 py-8">
+    <!-- Firefly ambient elements -->
+    <div class="firefly" style="top: 80%; left: 15%; animation-delay: 0s;"></div>
+    <div class="firefly" style="top: 70%; left: 45%; animation-delay: 3s;"></div>
+    <div class="firefly" style="top: 85%; left: 75%; animation-delay: 6s;"></div>
+    <div class="firefly" style="top: 60%; left: 85%; animation-delay: 2s;"></div>
+
+    <header class="relative min-h-screen flex flex-col justify-between px-6 sm:px-12 lg:px-20 py-8 overflow-hidden">
         
-        <!-- Navbar -->
+        <!-- Ambient Starlight Halo Background Glows -->
+        <div class="starlight-halo w-[600px] h-[600px] -right-20 top-10 hidden lg:block"></div>
+        <div class="starlight-halo w-[750px] h-[750px] -left-40 top-1/3 hidden lg:block" style="animation-delay: -5s;"></div>
+
+        <!-- Lunora-Style Navigation Bar -->
         <nav class="flex items-center justify-between w-full max-w-7xl mx-auto z-20">
-            <!-- Brand Logo with Byline -->
+            <!-- Brand Logo -->
             <a href="#" class="flex items-center space-x-3 text-white group">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-peak-gold via-emerald-400 to-peak-accent flex items-center justify-center text-peak-dark text-xl font-black shadow-lg">
-                    <i class="fa-solid fa-mountain-sun"></i>
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-starlight-gold via-amber-400 to-starlight-lavender flex items-center justify-center text-starlight-deep text-lg font-black shadow-lg transform group-hover:rotate-12 transition-transform duration-500">
+                    <i class="fa-solid fa-moon"></i>
                 </div>
                 <div>
-                    <span class="text-2xl font-black tracking-tight font-serif text-white">Study<span class="text-peak-gold italic">Peak</span></span>
-                    <span class="block text-[10px] text-peak-gold/80 font-medium tracking-wider -mt-1">by isitha prabashana</span>
+                    <span class="text-2xl font-black tracking-tight font-serif text-white">Study<span class="text-starlight-gold italic">Peak</span></span>
+                    <span class="block text-[10px] text-starlight-gold/80 font-medium tracking-wider -mt-1">by isitha prabashana</span>
                 </div>
             </a>
 
-            <!-- Navigation Links -->
-            <div class="hidden md:flex items-center space-x-8 text-xs font-semibold tracking-wider uppercase text-slate-200">
-                <a href="#appDashboard" onclick="switchTab('calendar')" class="hover:text-peak-gold transition-colors">Timetable</a>
-                <a href="#appDashboard" onclick="switchTab('library')" class="hover:text-peak-gold transition-colors">Study Vault</a>
-                <a href="#appDashboard" onclick="switchTab('roadmap')" class="hover:text-peak-gold transition-colors">3D Journey</a>
-                <a href="#appDashboard" onclick="switchTab('analytics')" class="hover:text-peak-gold transition-colors">Analytics</a>
-                <a href="#appDashboard" onclick="switchTab('goals')" class="hover:text-peak-gold transition-colors">Goals</a>
+            <!-- Central Pill Navigation -->
+            <div class="hidden md:flex items-center space-x-1 bg-slate-900/60 backdrop-blur-xl border border-white/10 px-4 py-2 rounded-full shadow-2xl">
+                <a href="#appDashboard" onclick="switchTab('calendar')" class="text-xs font-semibold px-4 py-1.5 rounded-full text-slate-300 hover:text-starlight-gold hover:bg-white/5 transition-all">Timetable</a>
+                <a href="#appDashboard" onclick="switchTab('library')" class="text-xs font-semibold px-4 py-1.5 rounded-full text-slate-300 hover:text-starlight-gold hover:bg-white/5 transition-all">Study Vault</a>
+                <a href="#appDashboard" onclick="switchTab('music')" class="text-xs font-semibold px-4 py-1.5 rounded-full text-slate-300 hover:text-starlight-gold hover:bg-white/5 transition-all">Mindful Music</a>
+                <a href="#appDashboard" onclick="switchTab('roadmap')" class="text-xs font-semibold px-4 py-1.5 rounded-full text-slate-300 hover:text-starlight-gold hover:bg-white/5 transition-all">3D Journey</a>
+                <a href="#appDashboard" onclick="switchTab('goals')" class="text-xs font-semibold px-4 py-1.5 rounded-full text-slate-300 hover:text-starlight-gold hover:bg-white/5 transition-all">Goals</a>
+                <a href="#appDashboard" onclick="switchTab('analytics')" class="text-xs font-semibold px-4 py-1.5 rounded-full text-slate-300 hover:text-starlight-gold hover:bg-white/5 transition-all">Analytics</a>
             </div>
 
-            <!-- Social Media Icons & Action Button -->
-            <div class="flex items-center space-x-5">
-                <div class="hidden sm:flex items-center space-x-4 text-slate-300 text-sm">
-                    <a href="#" class="hover:text-peak-gold transition-colors"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="hover:text-peak-gold transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" class="hover:text-peak-gold transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
-                </div>
-                <a href="#appDashboard" class="bg-white hover:bg-peak-gold text-peak-dark font-extrabold text-xs px-5 py-2.5 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center space-x-2">
-                    <span>Explore Workspace</span>
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-4">
+                <button onclick="openGeminiModal()" class="hidden sm:flex items-center space-x-2 text-xs font-bold text-starlight-gold bg-starlight-gold/10 hover:bg-starlight-gold/20 border border-starlight-gold/30 px-4 py-2.5 rounded-full transition-all backdrop-blur-md">
+                    <i class="fa-solid fa-sparkles animate-pulse"></i>
+                    <span>AI Partner</span>
+                </button>
+                <a href="#appDashboard" class="bg-white/90 hover:bg-starlight-gold text-starlight-deep font-extrabold text-xs px-6 py-2.5 rounded-full shadow-2xl transition-all transform hover:scale-105 flex items-center space-x-2">
+                    <span>Enter Sanctuary</span>
                     <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 </a>
             </div>
         </nav>
 
-        <!-- Hero Title & Content -->
-        <div class="max-w-4xl my-auto py-16 z-10 space-y-6">
+        <!-- Starlight Hero Content Grid -->
+        <div class="max-w-7xl mx-auto my-auto py-12 z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
             
-            <!-- Social Proof Avatar Group Badge -->
-            <div class="inline-flex items-center space-x-3 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-                <div class="flex -space-x-2 overflow-hidden">
-                    <img class="inline-block h-7 w-7 rounded-full ring-2 ring-peak-dark object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Student">
-                    <img class="inline-block h-7 w-7 rounded-full ring-2 ring-peak-dark object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Student">
-                    <img class="inline-block h-7 w-7 rounded-full ring-2 ring-peak-dark object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Student">
+            <div class="lg:col-span-6 space-y-8">
+                <!-- Social Proof Pill -->
+                <div class="inline-flex items-center space-x-3 bg-slate-900/70 backdrop-blur-2xl px-4 py-2 rounded-full border border-white/10 shadow-2xl">
+                    <div class="flex -space-x-2 overflow-hidden">
+                        <img class="inline-block h-7 w-7 rounded-full ring-2 ring-starlight-gold object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Student">
+                        <img class="inline-block h-7 w-7 rounded-full ring-2 ring-starlight-gold object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Student">
+                        <img class="inline-block h-7 w-7 rounded-full ring-2 ring-starlight-gold object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Student">
+                    </div>
+                    <span class="text-xs font-medium text-slate-300">Joined by <strong class="text-starlight-gold font-bold">10,000+</strong> focused scholars</span>
                 </div>
-                <span class="text-xs font-semibold text-slate-200">Trusted by <strong class="text-peak-gold">10,000+</strong> scholars & top graduates</span>
+
+                <!-- Main Display Headline -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-light text-white font-serif leading-[1.15] tracking-tight">
+                    Where focus <br>
+                    <span class="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-starlight-gold via-amber-200 to-starlight-lavender">blooms under starlight.</span>
+                </h1>
+
+                <p class="text-base sm:text-lg text-slate-300/90 font-light max-w-lg leading-relaxed">
+                    We design digital sanctuaries for thinkers, scholars, and creators. Quiet your mind with calm time blocks, daily productivity tracking, ambient study music, and AI study tools.
+                </p>
+
+                <!-- Action Button Cluster -->
+                <div class="pt-2 flex flex-wrap items-center gap-4">
+                    <a href="#appDashboard" class="bg-gradient-to-r from-starlight-gold to-amber-300 hover:from-white hover:to-starlight-gold text-starlight-deep font-bold text-sm px-8 py-4 rounded-full shadow-2xl transition-all transform hover:scale-105 flex items-center space-x-3">
+                        <span>Begin Mindful Journey</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <button onclick="openGeminiModal()" class="bg-slate-900/60 hover:bg-slate-800/80 border border-white/15 text-white font-medium text-sm px-6 py-4 rounded-full backdrop-blur-xl transition-all flex items-center space-x-2.5 shadow-xl">
+                        <i class="fa-solid fa-sparkles text-starlight-gold animate-pulse"></i>
+                        <span>Ask Gemini Tutor</span>
+                    </button>
+                </div>
             </div>
 
-            <!-- Big Main Headline -->
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white font-serif leading-[1.1] tracking-tight">
-                Conquer Your <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-peak-gold to-emerald-300">Academic Summit.</span>
-            </h1>
+            <!-- Hero Daily Performance Up-Chart Widget -->
+            <div class="lg:col-span-6 relative flex items-center justify-center">
+                <div class="w-full h-[460px] rounded-3xl glass-starlight relative p-6 flex flex-col justify-between border-starlight-gold/20 shadow-2xl overflow-hidden group">
+                    <div class="flex justify-between items-center z-10 mb-2">
+                        <div>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-starlight-gold font-bold bg-starlight-gold/10 px-3 py-1 rounded-full border border-starlight-gold/20">Daily Timetable Performance</span>
+                            <h3 class="text-lg font-bold text-white font-serif mt-2">Today's Focus Completion Rate</h3>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-emerald-400 text-xs font-bold">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            <span>+24% Up Today</span>
+                        </div>
+                    </div>
 
-            <!-- Subheading Text -->
-            <p class="text-base sm:text-lg text-slate-200/90 font-normal max-w-xl leading-relaxed">
-                Empower your learning journey from foundation to graduate excellence with mindful time planning, video vault, smart alarms, and interactive analytics.
-            </p>
+                    <!-- Daily Metrics Cards -->
+                    <div class="grid grid-cols-3 gap-3 z-10 my-2">
+                        <div class="bg-slate-950/60 p-3 rounded-2xl border border-white/10 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase">Focus Hours</span>
+                            <span class="text-lg font-bold text-starlight-gold font-serif">6.5 Hrs</span>
+                        </div>
+                        <div class="bg-slate-950/60 p-3 rounded-2xl border border-white/10 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase">Blocks Done</span>
+                            <span class="text-lg font-bold text-emerald-400 font-serif">5 / 6</span>
+                        </div>
+                        <div class="bg-slate-950/60 p-3 rounded-2xl border border-white/10 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase">Active Streak</span>
+                            <span class="text-lg font-bold text-amber-400 font-serif">🔥 12 Days</span>
+                        </div>
+                    </div>
 
-            <!-- Call to Action Buttons -->
-            <div class="pt-4 flex flex-wrap items-center gap-4">
-                <a href="#appDashboard" class="bg-white hover:bg-peak-gold text-peak-dark font-extrabold text-sm px-8 py-4 rounded-full shadow-2xl transition-all transform hover:scale-105 flex items-center space-x-3">
-                    <span>Start Your Journey</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-                <button onclick="openGeminiModal()" class="bg-black/50 hover:bg-black/70 border border-white/20 text-white font-bold text-sm px-6 py-4 rounded-full backdrop-blur-md transition-all flex items-center space-x-2">
-                    <i class="fa-solid fa-sparkles text-peak-gold"></i>
-                    <span>Gemini AI Tutor</span>
-                </button>
+                    <!-- Live Dynamic Chart Canvas -->
+                    <div class="relative flex-1 w-full h-full min-h-[180px] z-10">
+                        <canvas id="heroPerformanceChart"></canvas>
+                    </div>
+
+                    <div class="z-10 bg-slate-950/70 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 flex justify-between items-center mt-2">
+                        <div class="flex items-center space-x-2.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></div>
+                            <span class="text-xs font-bold text-slate-200">Current Session: <span class="text-starlight-gold">Deep Physics Study</span></span>
+                        </div>
+                        <span class="text-[11px] text-slate-400 font-mono">Status: 85% Completed</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Scroll Indicator -->
         <div class="z-10 pb-4 text-center">
-            <a href="#appDashboard" class="text-xs uppercase tracking-widest text-slate-300/80 hover:text-peak-gold transition-colors flex flex-col items-center space-y-2">
-                <span>Scroll To Workspace</span>
-                <i class="fa-solid fa-chevron-down animate-bounce text-sm text-peak-gold"></i>
+            <a href="#appDashboard" class="text-xs uppercase tracking-widest text-slate-400 hover:text-starlight-gold transition-colors flex flex-col items-center space-y-2">
+                <span>Scroll To Dashboard</span>
+                <i class="fa-solid fa-chevron-down animate-bounce text-xs text-starlight-gold"></i>
             </a>
         </div>
     </header>
 
-    <!-- Interactive Main Time Management Application Section -->
+    <!-- Main Workspace Section -->
     <section id="appDashboard" class="py-12 px-4 sm:px-8 lg:px-12 max-w-[1700px] mx-auto min-h-screen flex flex-col">
         
-        <!-- Application Title Bar & Navigation Pills -->
-        <div class="glass-panel rounded-3xl p-4 sm:p-6 mb-8 flex flex-col lg:flex-row justify-between items-center gap-4">
-            
+        <!-- Header Bar inside Sanctuary -->
+        <div class="glass-starlight rounded-3xl p-5 sm:p-6 mb-8 flex flex-col lg:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-peak-emerald to-peak-slate border border-peak-gold/30 flex items-center justify-center text-peak-gold text-2xl font-bold shadow-md">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-starlight-navy to-starlight-twilight border border-starlight-gold/30 flex items-center justify-center text-starlight-gold text-xl font-bold shadow-md">
                     <i class="fa-solid fa-compass"></i>
                 </div>
                 <div>
                     <div class="flex items-center space-x-2">
-                        <h2 class="text-xl font-bold text-white font-serif">Interactive Academic Workspace</h2>
-                        <span class="text-[10px] bg-peak-gold/20 text-peak-gold px-2.5 py-0.5 rounded-full font-semibold border border-peak-gold/30">by isitha prabashana</span>
+                        <h2 class="text-xl font-bold text-white font-serif">Mindful Academic Workspace</h2>
+                        <span class="text-[10px] bg-starlight-gold/15 text-starlight-gold px-2.5 py-0.5 rounded-full font-semibold border border-starlight-gold/30">by isitha prabashana</span>
                     </div>
-                    <p class="text-xs text-slate-400">Real-time schedule, audio alerts, 3D progression, and learning resources.</p>
+                    <p class="text-xs text-slate-400 mt-0.5">Real-time schedule, soothing chime alarms, study vault, and focus analytics.</p>
                 </div>
             </div>
 
-            <!-- Live Clock & Test Chime -->
             <div class="flex items-center space-x-4">
-                <div class="bg-black/40 px-4 py-2 rounded-2xl border border-white/10 text-right">
+                <div class="bg-slate-950/60 px-4 py-2 rounded-2xl border border-white/10 text-right">
                     <span class="block text-[10px] uppercase font-bold text-slate-400">System Time</span>
-                    <span id="liveClockDisplay" class="text-sm font-mono font-bold text-peak-gold">00:00:00 AM</span>
+                    <span id="liveClockDisplay" class="text-sm font-mono font-bold text-starlight-gold">00:00:00 AM</span>
                 </div>
-                <button onclick="testAlarmChime()" class="bg-peak-gold/15 hover:bg-peak-gold/30 text-peak-gold border border-peak-gold/30 px-3.5 py-2 rounded-2xl text-xs font-bold transition-all flex items-center space-x-2">
+                <button onclick="testAlarmChime()" class="bg-starlight-gold/15 hover:bg-starlight-gold/30 text-starlight-gold border border-starlight-gold/30 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center space-x-2">
                     <i class="fa-solid fa-bell"></i>
-                    <span>Test Audio Alert</span>
+                    <span>Test Sound Alert</span>
                 </button>
             </div>
         </div>
 
-        <!-- Sidebar + Main Content Grid -->
-        <div class="flex flex-col lg:flex-row gap-6 flex-1">
-            
-            <!-- Category Sidebar -->
-            <aside class="w-full lg:w-72 glass-panel rounded-3xl p-5 flex flex-col justify-between shrink-0 space-y-6">
+        <div class="flex flex-col lg:flex-row gap-8 flex-1">
+            <!-- Sidebar Navigation -->
+            <aside class="w-full lg:w-72 glass-starlight rounded-3xl p-5 flex flex-col justify-between shrink-0 space-y-6">
                 <div class="space-y-2">
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-3 mb-2">Workspace Modules</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-3 mb-2">Sanctuary Modules</p>
                     
-                    <button onclick="switchTab('calendar')" data-tab="calendar" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs transition-all bg-peak-gold text-peak-dark font-bold shadow-lg">
+                    <button onclick="switchTab('calendar')" data-tab="calendar" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs transition-all bg-starlight-gold text-starlight-deep font-bold shadow-lg">
                         <i class="fa-solid fa-calendar-days text-base"></i>
                         <span>Timetable & Alarms</span>
                     </button>
 
-                    <button onclick="switchTab('library')" data-tab="library" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                    <button onclick="switchTab('library')" data-tab="library" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-all">
                         <i class="fa-solid fa-book-open-reader text-base"></i>
-                        <span>Study Materials Library</span>
+                        <span>Study Vault (Videos/PDFs)</span>
                     </button>
 
-                    <button onclick="switchTab('roadmap')" data-tab="roadmap" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
-                        <i class="fa-solid fa-graduation-cap text-base"></i>
+                    <button onclick="switchTab('music')" data-tab="music" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-all">
+                        <i class="fa-solid fa-headphones text-base text-starlight-gold"></i>
+                        <span>Mindful Music Vault</span>
+                    </button>
+
+                    <button onclick="switchTab('roadmap')" data-tab="roadmap" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-all">
+                        <i class="fa-solid fa-user-graduate text-base"></i>
                         <span>3D Student Journey</span>
                     </button>
 
-                    <button onclick="switchTab('goals')" data-tab="goals" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                    <button onclick="switchTab('goals')" data-tab="goals" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-all">
                         <i class="fa-solid fa-bullseye text-base"></i>
                         <span>Goal Setter</span>
                     </button>
 
-                    <button onclick="switchTab('analytics')" data-tab="analytics" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                    <button onclick="switchTab('analytics')" data-tab="analytics" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-all">
                         <i class="fa-solid fa-chart-pie text-base"></i>
-                        <span>Study Analytics</span>
+                        <span>Focus Analytics</span>
                     </button>
 
-                    <button onclick="switchTab('profile')" data-tab="profile" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all">
+                    <button onclick="switchTab('profile')" data-tab="profile" class="tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-all">
                         <i class="fa-solid fa-user-gear text-base"></i>
                         <span>Profile & Settings</span>
                     </button>
                 </div>
 
-                <!-- AI Quick Banner -->
-                <div class="p-4 rounded-2xl bg-gradient-to-br from-black/60 to-peak-slate border border-white/10 space-y-3">
-                    <div class="flex items-center space-x-2 text-peak-gold text-xs font-bold">
+                <div class="p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-starlight-navy border border-white/10 space-y-3">
+                    <div class="flex items-center space-x-2 text-starlight-gold text-xs font-bold">
                         <i class="fa-solid fa-sparkles"></i>
                         <span>Gemini Study Partner</span>
                     </div>
-                    <p class="text-[11px] text-slate-300 leading-snug">Ask AI to summarize PDF notes or construct custom study timelines.</p>
-                    <button onclick="openGeminiModal()" class="w-full bg-peak-gold hover:bg-white text-peak-dark font-extrabold py-2.5 rounded-xl text-xs transition-all shadow-md">
-                        Ask Assistant
+                    <p class="text-[11px] text-slate-300 leading-snug">Ask AI to summarize notes or draft custom revision timetables.</p>
+                    <button onclick="openGeminiModal()" class="w-full bg-starlight-gold hover:bg-white text-starlight-deep font-extrabold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                        Ask Gemini
                     </button>
                 </div>
             </aside>
 
-            <!-- Main Display View Container -->
-            <main class="flex-1 glass-panel rounded-3xl overflow-hidden flex flex-col min-h-[600px]">
+            <!-- Main Content Display -->
+            <main class="flex-1 glass-starlight rounded-3xl overflow-hidden flex flex-col min-h-[600px]">
                 
                 <!-- Module 1: Timetable & Alarms -->
                 <div id="view-calendar" class="view-section active flex-col flex-1 p-6 space-y-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-white/10">
                         <div>
-                            <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Schedule Flow</span>
+                            <span class="text-xs font-bold text-starlight-gold uppercase tracking-widest">Mindful Schedule Flow</span>
                             <h3 class="text-2xl font-bold text-white font-serif">Timetable & Active Alarms</h3>
                         </div>
                         <div class="flex items-center space-x-3">
-                            <button onclick="toggleAllAlarms(true)" class="px-3 py-1.5 bg-emerald-500/20 text-emerald-300 rounded-xl border border-emerald-500/30 text-xs font-bold hover:bg-emerald-500/30">ALL ALARMS ON</button>
-                            <button onclick="openTimeSlotModal()" class="bg-peak-gold text-peak-dark font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all flex items-center space-x-1.5">
+                            <button onclick="toggleAllAlarms(true)" class="px-3.5 py-2 bg-emerald-500/20 text-emerald-300 rounded-xl border border-emerald-500/30 text-xs font-bold hover:bg-emerald-500/30 transition-all">ALL ALARMS ON</button>
+                            <button onclick="openTimeSlotModal()" class="bg-starlight-gold text-starlight-deep font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all flex items-center space-x-1.5">
                                 <i class="fa-solid fa-plus"></i>
-                                <span>Add Slot</span>
+                                <span>Add Block</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Filter Control (FIXED: ID matches JS selector) -->
-                    <div class="flex items-center justify-between bg-black/30 p-3 rounded-2xl border border-white/10">
+                    <div class="flex items-center justify-between bg-slate-950/40 p-3.5 rounded-2xl border border-white/10">
                         <label class="text-xs font-bold text-slate-300 flex items-center space-x-2">
-                            <i class="fa-solid fa-filter text-peak-gold"></i>
-                            <span>Filter Time Blocks:</span>
+                            <i class="fa-solid fa-filter text-starlight-gold"></i>
+                            <span>Filter Time Category:</span>
                         </label>
-                        <select id="scheduleFilter" onchange="renderSchedule()" class="bg-black/60 border border-white/10 text-white text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:border-peak-gold">
+                        <select id="scheduleFilter" onchange="renderSchedule()" class="bg-slate-900 border border-white/10 text-white text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:border-starlight-gold">
                             <option value="ALL">All Categories</option>
                             <option value="Study">Study / Focus</option>
                             <option value="Routine">Routine</option>
@@ -322,7 +412,6 @@
                         </select>
                     </div>
 
-                    <!-- Schedule Items List Container -->
                     <div id="scheduleContainer" class="space-y-3"></div>
                 </div>
 
@@ -330,32 +419,109 @@
                 <div id="view-library" class="view-section flex-col flex-1 p-6 space-y-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-white/10">
                         <div>
-                            <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Learning Resources</span>
-                            <h3 class="text-2xl font-bold text-white font-serif">Study Vault & Video Guides</h3>
+                            <span class="text-xs font-bold text-starlight-gold uppercase tracking-widest">Academic Vault</span>
+                            <h3 class="text-2xl font-bold text-white font-serif">Study Materials & Video Guides</h3>
                         </div>
-                        <button onclick="openResourceModal()" class="bg-peak-gold text-peak-dark font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all flex items-center space-x-1.5">
+                        <button onclick="openResourceModal()" class="bg-starlight-gold text-starlight-deep font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all flex items-center space-x-1.5">
                             <i class="fa-solid fa-plus"></i>
-                            <span>Add Material</span>
+                            <span>Add Resource</span>
                         </button>
                     </div>
 
-                    <!-- Library Resource Cards Grid -->
-                    <div id="materialsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                    <div id="materialsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+                </div>
+
+                <!-- Module: Mindful Music Vault -->
+                <div id="view-music" class="view-section flex-col flex-1 p-6 space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-starlight-gold uppercase tracking-widest">Focus Soundscapes</span>
+                            <h3 class="text-2xl font-bold text-white font-serif">Mindful Study Music Vault</h3>
+                            <p class="text-xs text-slate-400 mt-1">Calming binaural beats, ambient nature audio, and personal MP3 audio player.</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <label class="cursor-pointer bg-starlight-gold text-starlight-deep font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all flex items-center space-x-2">
+                                <i class="fa-solid fa-upload"></i>
+                                <span>Upload Audio File</span>
+                                <input type="file" id="audioFileInput" accept="audio/*" class="hidden" onchange="handleAudioUpload(event)">
+                            </label>
+                            <button onclick="openAddAudioUrlModal()" class="bg-slate-900 border border-white/15 text-white font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-800 transition-all flex items-center space-x-1.5">
+                                <i class="fa-solid fa-link text-starlight-gold"></i>
+                                <span>Add URL</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Audio Player Main Interface -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                        
+                        <!-- Player Card Left -->
+                        <div class="lg:col-span-5 glass-card-starlight rounded-3xl p-6 flex flex-col justify-between border border-starlight-gold/20 space-y-6">
+                            <div class="relative w-full aspect-square rounded-2xl bg-gradient-to-tr from-starlight-navy via-slate-900 to-slate-950 border border-white/10 flex flex-col items-center justify-center overflow-hidden group shadow-2xl">
+                                <div class="absolute inset-0 bg-radial from-starlight-gold/10 via-transparent to-transparent animate-pulse"></div>
+                                <div class="w-24 h-24 rounded-full bg-starlight-gold/20 text-starlight-gold border border-starlight-gold/40 flex items-center justify-center text-4xl shadow-2xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i id="playerMainIcon" class="fa-solid fa-headphones"></i>
+                                </div>
+                                <span id="currentGenreBadge" class="text-[10px] font-mono uppercase tracking-widest text-starlight-gold bg-starlight-gold/10 px-3 py-1 rounded-full border border-starlight-gold/30 mb-1">Ambient Focus</span>
+                                <h4 id="currentTrackTitle" class="text-lg font-bold text-white font-serif px-4 text-center">Starlight Lofi Study</h4>
+                                <p id="currentTrackArtist" class="text-xs text-slate-400">Mindful Ambient Soundscape</p>
+                            </div>
+
+                            <!-- Audio Progress Bar -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs text-slate-400 font-mono">
+                                    <span id="audioCurrentTime">00:00</span>
+                                    <span id="audioDuration">00:00</span>
+                                </div>
+                                <input type="range" id="audioSeekSlider" value="0" min="0" max="100" step="0.1" oninput="seekAudio(this.value)" class="w-full accent-starlight-gold bg-slate-900 rounded-lg cursor-pointer h-2">
+                            </div>
+
+                            <!-- Playback Controls -->
+                            <div class="flex flex-col space-y-4">
+                                <div class="flex items-center justify-center space-x-6">
+                                    <button onclick="prevTrack()" class="text-slate-400 hover:text-starlight-gold text-xl transition-colors"><i class="fa-solid fa-backward-step"></i></button>
+                                    <button onclick="togglePlayPause()" id="playPauseBtn" class="w-14 h-14 rounded-full bg-starlight-gold text-starlight-deep text-2xl font-bold flex items-center justify-center shadow-xl hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-play ml-1"></i>
+                                    </button>
+                                    <button onclick="nextTrack()" class="text-slate-400 hover:text-starlight-gold text-xl transition-colors"><i class="fa-solid fa-forward-step"></i></button>
+                                </div>
+
+                                <div class="flex items-center space-x-3 px-4">
+                                    <i class="fa-solid fa-volume-low text-xs text-slate-400"></i>
+                                    <input type="range" id="audioVolumeSlider" value="80" min="0" max="100" oninput="setAudioVolume(this.value)" class="w-full accent-starlight-gold bg-slate-900 rounded-lg cursor-pointer h-1.5">
+                                    <i class="fa-solid fa-volume-high text-xs text-slate-400"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Music Playlist Right -->
+                        <div class="lg:col-span-7 glass-card-starlight rounded-3xl p-6 flex flex-col space-y-4 border border-white/10">
+                            <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                                <h4 class="font-bold text-white text-sm font-serif flex items-center space-x-2">
+                                    <i class="fa-solid fa-list-ul text-starlight-gold"></i>
+                                    <span>Mindful Track List</span>
+                                </h4>
+                                <span id="playlistTrackCount" class="text-xs text-slate-400 font-mono">4 Tracks Available</span>
+                            </div>
+
+                            <div id="playlistContainer" class="space-y-2.5 overflow-y-auto max-h-[460px] pr-1"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Module 3: 3D Student Journey Roadmap -->
                 <div id="view-roadmap" class="view-section flex-col flex-1 p-6 space-y-6">
                     <div class="pb-4 border-b border-white/10">
-                        <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Academic Milestone Path</span>
+                        <span class="text-xs font-bold text-starlight-gold uppercase tracking-widest">Academic Progression</span>
                         <h3 class="text-2xl font-bold text-white font-serif">3D Student Growth Journey</h3>
-                        <p class="text-xs text-slate-400 mt-1">Interactive 3D visualization from Early Scholar to University Graduate.</p>
+                        <p class="text-xs text-slate-400 mt-1">Interactive 3D roadmap tracing scholar growth from Early Foundation to Graduate Level.</p>
                     </div>
 
-                    <div class="w-full h-[420px] rounded-2xl bg-black/40 border border-white/10 overflow-hidden relative">
+                    <div class="w-full h-[420px] rounded-2xl bg-slate-950/50 border border-white/10 overflow-hidden relative">
                         <canvas id="roadmapCanvas" class="w-full h-full"></canvas>
-                        <div class="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-xl border border-white/10 text-xs text-slate-300 flex justify-between items-center">
-                            <span><i class="fa-solid fa-graduation-cap text-peak-gold mr-2"></i>Stage: University Advanced Research</span>
-                            <span class="font-bold text-peak-gold">85% Completed</span>
+                        <div class="absolute bottom-4 left-4 right-4 bg-slate-950/70 backdrop-blur-md p-3.5 rounded-xl border border-white/10 text-xs text-slate-300 flex justify-between items-center">
+                            <span><i class="fa-solid fa-graduation-cap text-starlight-gold mr-2"></i>Stage: Advanced Academic Honors</span>
+                            <span class="font-bold text-starlight-gold">85% Completed</span>
                         </div>
                     </div>
                 </div>
@@ -364,10 +530,10 @@
                 <div id="view-goals" class="view-section flex-col flex-1 p-6 space-y-6">
                     <div class="flex justify-between items-center pb-4 border-b border-white/10">
                         <div>
-                            <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Targets</span>
+                            <span class="text-xs font-bold text-starlight-gold uppercase tracking-widest">Milestones</span>
                             <h3 class="text-2xl font-bold text-white font-serif">Academic Goal Setter</h3>
                         </div>
-                        <button onclick="openGoalModal()" class="bg-peak-gold text-peak-dark font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all">+ Add Target Goal</button>
+                        <button onclick="openGoalModal()" class="bg-starlight-gold text-starlight-deep font-extrabold px-4 py-2 rounded-xl text-xs shadow-lg hover:bg-white transition-all">+ Add Target Goal</button>
                     </div>
 
                     <div id="goalsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
@@ -376,49 +542,49 @@
                 <!-- Module 5: Analytics -->
                 <div id="view-analytics" class="view-section flex-col flex-1 p-6 space-y-6">
                     <div class="pb-4 border-b border-white/10">
-                        <span class="text-xs font-bold text-peak-gold uppercase tracking-widest">Performance Insights</span>
+                        <span class="text-xs font-bold text-starlight-gold uppercase tracking-widest">Mindful Focus Insights</span>
                         <h3 class="text-2xl font-bold text-white font-serif">Study & Focus Analytics</h3>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="glass-card rounded-2xl p-5">
-                            <h4 class="font-bold text-white text-xs mb-4 uppercase"><i class="fa-solid fa-chart-line text-peak-gold mr-2"></i>Weekly Focused Hours</h4>
+                        <div class="glass-card-starlight rounded-2xl p-5">
+                            <h4 class="font-bold text-white text-xs mb-4 uppercase"><i class="fa-solid fa-chart-line text-starlight-gold mr-2"></i>Weekly Focused Hours</h4>
                             <div class="h-60 relative"><canvas id="weeklyChart"></canvas></div>
                         </div>
-                        <div class="glass-card rounded-2xl p-5">
-                            <h4 class="font-bold text-white text-xs mb-4 uppercase"><i class="fa-solid fa-chart-pie text-emerald-400 mr-2"></i>Subject Distribution</h4>
+                        <div class="glass-card-starlight rounded-2xl p-5">
+                            <h4 class="font-bold text-white text-xs mb-4 uppercase"><i class="fa-solid fa-chart-pie text-starlight-lavender mr-2"></i>Subject Time Distribution</h4>
                             <div class="h-60 relative"><canvas id="subjectChart"></canvas></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Module 6: Profile -->
-                <div id="view-profile" class="view-section flex-col flex-1 p-6 max-w-2xl">
-                    <h3 class="text-2xl font-bold text-white font-serif mb-6 pb-4 border-b border-white/10">Profile Preferences</h3>
-                    <form onsubmit="saveProfile(event)" class="space-y-4">
-                        <div>
-                            <label class="block text-xs text-slate-400 mb-1">Scholar Full Name</label>
-                            <input type="text" id="profName" value="Isitha Prabashana" class="w-full bg-black/50 border border-white/10 text-white text-xs rounded-xl p-3 focus:outline-none focus:border-peak-gold">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-400 mb-1">Academic Level / Major</label>
-                            <input type="text" id="profLevel" value="Undergraduate Physics & CS" class="w-full bg-black/50 border border-white/10 text-white text-xs rounded-xl p-3 focus:outline-none focus:border-peak-gold">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-400 mb-1">Target Hours / Day</label>
-                            <input type="number" id="profHours" value="8" class="w-full bg-black/50 border border-white/10 text-white text-xs rounded-xl p-3 focus:outline-none focus:border-peak-gold">
-                        </div>
-                        <button type="submit" class="bg-peak-gold text-peak-dark font-extrabold px-6 py-2.5 rounded-xl text-xs shadow-lg">Save Preferences</button>
-                    </form>
+    <!-- Modal Form: Add Custom Audio URL -->
+    <div id="audioUrlModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card-starlight rounded-3xl max-w-md w-full p-6 border border-white/20 space-y-4">
+            <h3 class="font-bold text-white text-base font-serif">Add Custom Audio Track URL</h3>
+            <form onsubmit="saveCustomAudioUrl(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Track Title</label>
+                    <input type="text" id="audioUrlTitle" required placeholder="Deep Focus Alpha Sound" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
                 </div>
-
-            </main>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Artist / Source</label>
+                    <input type="text" id="audioUrlArtist" placeholder="Custom Stream" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Audio Direct MP3/Stream URL</label>
+                    <input type="url" id="audioUrlLink" required placeholder="https://example.com/sound.mp3" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeAddAudioUrlModal()" class="px-4 py-2 text-xs text-slate-400">Cancel</button>
+                    <button type="submit" class="bg-starlight-gold text-starlight-deep font-bold px-5 py-2 rounded-xl text-xs">Add Track</button>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
 
-    <!-- Audio Alarm Alert Modal -->
+    <!-- Audio Alarm Ringing Alert Modal -->
     <div id="alarmModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="glass-card alarm-ringing rounded-3xl max-w-md w-full p-6 text-center space-y-4 border border-red-500/50">
+        <div class="glass-card-starlight alarm-ringing rounded-3xl max-w-md w-full p-6 text-center space-y-4 border border-red-500/50">
             <div class="w-16 h-16 mx-auto rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-3xl animate-bounce">
                 <i class="fa-solid fa-bell"></i>
             </div>
@@ -429,36 +595,36 @@
             </div>
             <div class="flex space-x-3 pt-2">
                 <button onclick="dismissAlarm()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-lg">Dismiss Alert</button>
-                <button onclick="dismissAlarm()" class="w-full bg-black/50 border border-white/10 text-white font-bold py-2.5 rounded-xl text-xs">Snooze 5 Min</button>
+                <button onclick="dismissAlarm()" class="w-full bg-slate-900 border border-white/10 text-white font-bold py-2.5 rounded-xl text-xs">Snooze 5 Min</button>
             </div>
         </div>
     </div>
 
-    <!-- Gemini AI Assistant Modal -->
+    <!-- Gemini AI Tutor Assistant Modal -->
     <div id="geminiModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="glass-panel rounded-3xl max-w-2xl w-full h-[580px] flex flex-col border border-peak-gold/30 overflow-hidden">
-            <div class="p-4 bg-black/60 border-b border-white/10 flex justify-between items-center">
+        <div class="glass-starlight rounded-3xl max-w-2xl w-full h-[580px] flex flex-col border border-starlight-gold/30 overflow-hidden">
+            <div class="p-4 bg-slate-950/80 border-b border-white/10 flex justify-between items-center">
                 <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-xl bg-peak-gold flex items-center justify-center text-peak-dark font-bold">
+                    <div class="w-8 h-8 rounded-xl bg-starlight-gold flex items-center justify-center text-starlight-deep font-bold">
                         <i class="fa-solid fa-sparkles"></i>
                     </div>
                     <div>
-                        <h4 class="font-bold text-white text-sm font-serif">Gemini Study Tutor</h4>
-                        <p class="text-[10px] text-slate-400">Intelligent Academic Clarifications</p>
+                        <h4 class="font-bold text-white text-sm font-serif">Gemini Study Partner</h4>
+                        <p class="text-[10px] text-slate-400">Mindful Academic Assistant</p>
                     </div>
                 </div>
                 <button onclick="closeGeminiModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <div id="geminiChatLog" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
-                <div class="bg-black/40 border border-white/10 p-3.5 rounded-2xl max-w-[85%] text-slate-200">
-                    🏔️ Greetings Scholar! How can I support your study flow today? You can ask me to draft revision plans or simplify complex academic topics.
+                <div class="bg-slate-900/60 border border-white/10 p-3.5 rounded-2xl max-w-[85%] text-slate-200">
+                    🌙 Greetings Scholar! How can I support your study flow today? Ask me to structure a revision plan or explain complex concepts.
                 </div>
             </div>
 
-            <form onsubmit="handleGeminiQuery(event)" class="p-3 bg-black/60 border-t border-white/10 flex space-x-2">
-                <input type="text" id="geminiInput" placeholder="Ask your study question..." required class="flex-1 bg-black/80 border border-white/10 text-white text-xs rounded-xl px-4 py-2.5 focus:outline-none focus:border-peak-gold">
-                <button type="submit" class="bg-peak-gold text-peak-dark font-extrabold px-4 py-2.5 rounded-xl text-xs">
+            <form onsubmit="handleGeminiQuery(event)" class="p-3 bg-slate-950/80 border-t border-white/10 flex space-x-2">
+                <input type="text" id="geminiInput" placeholder="Ask your academic question..." required class="flex-1 bg-slate-900 border border-white/10 text-white text-xs rounded-xl px-4 py-2.5 focus:outline-none focus:border-starlight-gold">
+                <button type="submit" class="bg-starlight-gold text-starlight-deep font-extrabold px-4 py-2.5 rounded-xl text-xs">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </form>
@@ -467,26 +633,26 @@
 
     <!-- Modal Form: Add Time Block -->
     <div id="slotModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="glass-card rounded-3xl max-w-md w-full p-6 border border-white/20 space-y-4">
+        <div class="glass-card-starlight rounded-3xl max-w-md w-full p-6 border border-white/20 space-y-4">
             <h3 class="font-bold text-white text-base font-serif">Add Schedule Block</h3>
             <form onsubmit="saveSlot(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs text-slate-400 mb-1">Title</label>
-                    <input type="text" id="slotTitle" required placeholder="Quantum Mechanics Focus" class="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                    <input type="text" id="slotTitle" required placeholder="Quantum Mechanics Session" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs text-slate-400 mb-1">Start Time</label>
-                        <input type="text" id="slotStart" required placeholder="08:30 AM" class="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                        <input type="text" id="slotStart" required placeholder="08:30 AM" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-xs text-slate-400 mb-1">End Time</label>
-                        <input type="text" id="slotEnd" required placeholder="10:30 AM" class="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                        <input type="text" id="slotEnd" required placeholder="10:30 AM" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs text-slate-400 mb-1">Category</label>
-                    <select id="slotCat" class="w-full bg-black/60 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                    <select id="slotCat" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
                         <option value="Study">Study / Focus</option>
                         <option value="Routine">Routine</option>
                         <option value="Break">Break</option>
@@ -494,24 +660,81 @@
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeTimeSlotModal()" class="px-4 py-2 text-xs text-slate-400">Cancel</button>
-                    <button type="submit" class="bg-peak-gold text-peak-dark font-bold px-5 py-2 rounded-xl text-xs">Save Slot</button>
+                    <button type="submit" class="bg-starlight-gold text-starlight-deep font-bold px-5 py-2 rounded-xl text-xs">Save Block</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Form: Add Material -->
+    <div id="resourceModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card-starlight rounded-3xl max-w-md w-full p-6 border border-white/20 space-y-4">
+            <h3 class="font-bold text-white text-base font-serif">Add Study Material</h3>
+            <form onsubmit="saveResource(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Title</label>
+                    <input type="text" id="resTitle" required placeholder="Astrophysics & Cosmology Notes" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Subject</label>
+                    <input type="text" id="resSubject" required placeholder="Physics" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Type</label>
+                    <select id="resType" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                        <option value="video">Video (YouTube Embed URL)</option>
+                        <option value="pdf">PDF Document Link</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">URL</label>
+                    <input type="url" id="resUrl" required placeholder="https://www.youtube.com/embed/..." class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeResourceModal()" class="px-4 py-2 text-xs text-slate-400">Cancel</button>
+                    <button type="submit" class="bg-starlight-gold text-starlight-deep font-bold px-5 py-2 rounded-xl text-xs">Save Material</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Form: Add Goal -->
+    <div id="goalModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card-starlight rounded-3xl max-w-md w-full p-6 border border-white/20 space-y-4">
+            <h3 class="font-bold text-white text-base font-serif">Add Academic Target</h3>
+            <form onsubmit="saveGoal(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Goal Title</label>
+                    <input type="text" id="goalTitle" required placeholder="Master Calculus Limits & Series" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Target Progress (%)</label>
+                    <input type="number" id="goalProgress" min="0" max="100" required value="50" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Deadline</label>
+                    <input type="text" id="goalDeadline" required placeholder="Nov 15" class="w-full bg-slate-900 border border-white/10 text-white text-xs rounded-xl p-2.5 focus:outline-none">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeGoalModal()" class="px-4 py-2 text-xs text-slate-400">Cancel</button>
+                    <button type="submit" class="bg-starlight-gold text-starlight-deep font-bold px-5 py-2 rounded-xl text-xs">Save Goal</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        /* Initial Datasets */
+        /* Datasets */
         const initialSchedule = [
-            { id: 1, title: 'Morning Academic Prep', start: '07:00 AM', end: '07:30 AM', category: 'Routine', alarm: true, icon: 'fa-mug-hot' },
-            { id: 2, title: 'Deep Study: Advanced Physics', start: '08:30 AM', end: '11:30 AM', category: 'Study', alarm: true, icon: 'fa-atom' },
-            { id: 3, title: 'Lunch & Scenic Walk', start: '12:00 PM', end: '01:00 PM', category: 'Break', alarm: false, icon: 'fa-utensils' },
-            { id: 4, title: 'Research Lab & Mathematics', start: '02:00 PM', end: '04:30 PM', category: 'Study', alarm: true, icon: 'fa-square-root-variable' }
+            { id: 1, title: 'Morning Starlight Reflection', start: '07:00 AM', end: '07:30 AM', category: 'Routine', alarm: true, icon: 'fa-sun' },
+            { id: 2, title: 'Deep Physics Study Session', start: '08:30 AM', end: '11:30 AM', category: 'Study', alarm: true, icon: 'fa-atom' },
+            { id: 3, title: 'Lunch & Mindful Walk', start: '12:00 PM', end: '01:00 PM', category: 'Break', alarm: false, icon: 'fa-utensils' },
+            { id: 4, title: 'Research & Advanced Math', start: '02:00 PM', end: '04:30 PM', category: 'Study', alarm: true, icon: 'fa-square-root-variable' }
         ];
 
         const initialMaterials = [
             { id: 1, title: 'Quantum Electrodynamics Lecture', subject: 'Physics', type: 'video', url: 'https://www.youtube.com/embed/QuR969uMICM' },
-            { id: 2, title: 'Advanced Multivariable Calculus Guide', subject: 'Mathematics', type: 'pdf', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf' }
+            { id: 2, title: 'Multivariable Calculus Study Guide', subject: 'Mathematics', type: 'pdf', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf' }
         ];
 
         const initialGoals = [
@@ -519,18 +742,33 @@
             { id: 2, title: 'Master 50 Calculus Integration Theorems', progress: 40, deadline: 'Nov 01' }
         ];
 
+        const defaultMusicTracks = [
+            { id: 1, title: 'Starlight Lofi Study', artist: 'Mindful Soundscapes', category: 'Lofi Beat', url: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3', isCustom: false },
+            { id: 2, title: 'Soft Rain & Thunder', artist: 'Nature Acoustics', category: 'Rain Ambience', url: 'https://cdn.pixabay.com/download/audio/2021/09/06/audio_849e782803.mp3', isCustom: false },
+            { id: 3, title: 'Deep Focus Alpha Waves', artist: 'Binaural Focus Lab', category: 'Alpha Waves', url: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a8677c.mp3', isCustom: false },
+            { id: 4, title: 'Forest Birds Sanctuary', artist: 'Mindful Nature', category: 'Forest Ambient', url: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3', isCustom: false }
+        ];
+
         let schedule = JSON.parse(localStorage.getItem('sp_schedule')) || initialSchedule;
         let materials = JSON.parse(localStorage.getItem('sp_materials')) || initialMaterials;
         let goals = JSON.parse(localStorage.getItem('sp_goals')) || initialGoals;
-        
+        let musicTracks = JSON.parse(localStorage.getItem('sp_music_tracks')) || defaultMusicTracks;
+
+        let currentTrackIndex = 0;
+        let audioPlayer = new Audio();
+        let isAudioPlaying = false;
+
         let audioCtx = null;
         let alarmInterval = null;
+        let heroPerformanceChartInstance = null;
 
         window.onload = function() {
             renderSchedule();
             renderMaterials();
             renderGoals();
-            init3DRoadmap();
+            renderMusicPlaylist();
+            initHeroPerformanceChart();
+            initAudioPlayerEvents();
             startClock();
         };
 
@@ -538,9 +776,231 @@
             localStorage.setItem('sp_schedule', JSON.stringify(schedule));
             localStorage.setItem('sp_materials', JSON.stringify(materials));
             localStorage.setItem('sp_goals', JSON.stringify(goals));
+            // Only persist non-blob custom tracks
+            const storableTracks = musicTracks.filter(t => !t.isBlob);
+            localStorage.setItem('sp_music_tracks', JSON.stringify(storableTracks));
         }
 
-        /* Web Audio API Chime Ringtone */
+        /* Hero Performance Chart Initialization */
+        function initHeroPerformanceChart() {
+            const ctx = document.getElementById('heroPerformanceChart');
+            if (!ctx) return;
+
+            if (heroPerformanceChartInstance) heroPerformanceChartInstance.destroy();
+
+            heroPerformanceChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['07 AM', '09 AM', '11 AM', '01 PM', '03 PM', '05 PM', '07 PM', '09 PM'],
+                    datasets: [
+                        {
+                            label: 'Focus Progress %',
+                            data: [20, 45, 85, 60, 92, 75, 88, 95],
+                            borderColor: '#fef08a',
+                            backgroundColor: 'rgba(254, 240, 138, 0.15)',
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#fbbf24',
+                            pointRadius: 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } }, min: 0, max: 100 }
+                    }
+                }
+            });
+        }
+
+        /* Mindful Audio Player Controls */
+        function initAudioPlayerEvents() {
+            audioPlayer.volume = 0.8;
+
+            audioPlayer.addEventListener('timeupdate', () => {
+                const seekSlider = document.getElementById('audioSeekSlider');
+                const currentTimeEl = document.getElementById('audioCurrentTime');
+                const durationEl = document.getElementById('audioDuration');
+
+                if (audioPlayer.duration) {
+                    seekSlider.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                    currentTimeEl.innerText = formatTime(audioPlayer.currentTime);
+                    durationEl.innerText = formatTime(audioPlayer.duration);
+                }
+            });
+
+            audioPlayer.addEventListener('ended', () => {
+                nextTrack();
+            });
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function playTrack(index) {
+            if (index < 0 || index >= musicTracks.length) return;
+            currentTrackIndex = index;
+            const track = musicTracks[currentTrackIndex];
+
+            audioPlayer.src = track.url;
+            audioPlayer.play().then(() => {
+                isAudioPlaying = true;
+                updatePlayerUI();
+            }).catch(e => console.log('Audio playback error:', e));
+        }
+
+        function togglePlayPause() {
+            if (!audioPlayer.src) {
+                playTrack(0);
+                return;
+            }
+            if (isAudioPlaying) {
+                audioPlayer.pause();
+                isAudioPlaying = false;
+            } else {
+                audioPlayer.play();
+                isAudioPlaying = true;
+            }
+            updatePlayerUI();
+        }
+
+        function nextTrack() {
+            const nextIdx = (currentTrackIndex + 1) % musicTracks.length;
+            playTrack(nextIdx);
+        }
+
+        function prevTrack() {
+            const prevIdx = (currentTrackIndex - 1 + musicTracks.length) % musicTracks.length;
+            playTrack(prevIdx);
+        }
+
+        function seekAudio(val) {
+            if (audioPlayer.duration) {
+                audioPlayer.currentTime = (val / 100) * audioPlayer.duration;
+            }
+        }
+
+        function setAudioVolume(val) {
+            audioPlayer.volume = val / 100;
+        }
+
+        function updatePlayerUI() {
+            const track = musicTracks[currentTrackIndex] || musicTracks[0];
+            const btn = document.getElementById('playPauseBtn');
+            const titleEl = document.getElementById('currentTrackTitle');
+            const artistEl = document.getElementById('currentTrackArtist');
+            const badgeEl = document.getElementById('currentGenreBadge');
+
+            if (titleEl) titleEl.innerText = track.title;
+            if (artistEl) artistEl.innerText = track.artist || 'Custom Audio';
+            if (badgeEl) badgeEl.innerText = track.category || 'Mindful Sound';
+
+            if (btn) {
+                btn.innerHTML = isAudioPlaying ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play ml-1"></i>';
+            }
+            renderMusicPlaylist();
+        }
+
+        function renderMusicPlaylist() {
+            const container = document.getElementById('playlistContainer');
+            const countEl = document.getElementById('playlistTrackCount');
+            if (!container) return;
+
+            if (countEl) countEl.innerText = `${musicTracks.length} Tracks Available`;
+            container.innerHTML = '';
+
+            musicTracks.forEach((t, idx) => {
+                const isActive = idx === currentTrackIndex;
+                const card = document.createElement('div');
+                card.className = `p-3.5 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${
+                    isActive 
+                        ? 'bg-starlight-gold/15 border-starlight-gold/50 shadow-lg' 
+                        : 'bg-slate-950/40 border-white/10 hover:bg-white/5'
+                }`;
+
+                card.onclick = () => playTrack(idx);
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-10 h-10 rounded-xl ${isActive ? 'bg-starlight-gold text-starlight-deep' : 'bg-slate-900 text-starlight-gold'} flex items-center justify-center font-bold">
+                            <i class="fa-solid ${isActive && isAudioPlaying ? 'fa-waveform animate-pulse' : 'fa-music'}"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-xs ${isActive ? 'text-starlight-gold' : 'text-white'}">${t.title}</h5>
+                            <span class="text-[10px] text-slate-400">${t.artist} • ${t.category}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        ${t.isCustom ? `<button onclick="event.stopPropagation(); deleteCustomTrack(${t.id})" class="text-slate-500 hover:text-red-400 text-xs p-1.5"><i class="fa-solid fa-trash"></i></button>` : ''}
+                        <i class="fa-solid ${isActive && isAudioPlaying ? 'fa-circle-pause text-starlight-gold' : 'fa-circle-play text-slate-500'} text-base"></i>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function handleAudioUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const audioUrl = URL.createObjectURL(file);
+            const newTrack = {
+                id: Date.now(),
+                title: file.name.replace(/\.[^/.]+$/, ""),
+                artist: 'User Uploaded File',
+                category: 'Personal Audio',
+                url: audioUrl,
+                isCustom: true,
+                isBlob: true
+            };
+
+            musicTracks.unshift(newTrack);
+            saveState();
+            playTrack(0);
+        }
+
+        function openAddAudioUrlModal() { document.getElementById('audioUrlModal').classList.remove('opacity-0', 'pointer-events-none'); }
+        function closeAddAudioUrlModal() { document.getElementById('audioUrlModal').classList.add('opacity-0', 'pointer-events-none'); }
+
+        function saveCustomAudioUrl(e) {
+            e.preventDefault();
+            const title = document.getElementById('audioUrlTitle').value;
+            const artist = document.getElementById('audioUrlArtist').value || 'Custom Web Stream';
+            const url = document.getElementById('audioUrlLink').value;
+
+            const newTrack = {
+                id: Date.now(),
+                title,
+                artist,
+                category: 'Stream URL',
+                url,
+                isCustom: true,
+                isBlob: false
+            };
+
+            musicTracks.push(newTrack);
+            saveState();
+            renderMusicPlaylist();
+            closeAddAudioUrlModal();
+        }
+
+        function deleteCustomTrack(id) {
+            musicTracks = musicTracks.filter(t => t.id !== id);
+            saveState();
+            if (currentTrackIndex >= musicTracks.length) currentTrackIndex = 0;
+            renderMusicPlaylist();
+        }
+
+        /* Web Audio API Soothing Singing Bowl Sound Chime */
         function playChimeSound() {
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -551,15 +1011,15 @@
                 const gain = audioCtx.createGain();
 
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(528, now); // 528Hz Solfeggio frequency
-                gain.gain.setValueAtTime(0.3, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+                osc.frequency.setValueAtTime(432, now); // Mindful 432Hz harmonic tone
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
 
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
 
                 osc.start(now);
-                osc.stop(now + 1.5);
+                osc.stop(now + 2.0);
             } catch (e) { console.log(e); }
         }
 
@@ -601,11 +1061,11 @@
             document.getElementById('alarmModal').classList.add('opacity-0', 'pointer-events-none');
         }
 
-        /* Switch Modules UI */
+        /* Module Switching Logic */
         function switchTab(tabId) {
             document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => {
-                b.className = 'tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-black/30 transition-all';
+                b.className = 'tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-all';
             });
 
             const targetView = document.getElementById(`view-${tabId}`);
@@ -613,7 +1073,7 @@
 
             const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
             if (activeBtn) {
-                activeBtn.className = 'tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs transition-all bg-peak-gold text-peak-dark font-bold shadow-lg';
+                activeBtn.className = 'tab-btn w-full flex items-center space-x-3.5 px-4 py-3.5 rounded-2xl font-semibold text-xs transition-all bg-starlight-gold text-starlight-deep font-bold shadow-lg';
             }
 
             if (tabId === 'analytics') initAnalyticsCharts();
@@ -624,7 +1084,6 @@
             const container = document.getElementById('scheduleContainer');
             if (!container) return;
 
-            // Defensive check for scheduleFilter element
             const filterEl = document.getElementById('scheduleFilter');
             const filter = filterEl ? filterEl.value : 'ALL';
 
@@ -638,19 +1097,19 @@
 
             filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-peak-gold';
+                card.className = 'glass-card-starlight rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-starlight-gold';
                 card.innerHTML = `
                     <div class="flex items-center space-x-4">
-                        <div class="w-10 h-10 rounded-xl bg-peak-gold/20 text-peak-gold flex items-center justify-center font-bold">
+                        <div class="w-10 h-10 rounded-xl bg-starlight-gold/15 text-starlight-gold flex items-center justify-center font-bold">
                             <i class="fa-solid ${item.icon || 'fa-book'}"></i>
                         </div>
                         <div>
-                            <span class="text-[10px] font-mono text-peak-gold uppercase font-bold">${item.start} - ${item.end}</span>
+                            <span class="text-[10px] font-mono text-starlight-gold uppercase font-bold">${item.start} - ${item.end}</span>
                             <h4 class="font-bold text-white text-sm font-serif">${item.title}</h4>
                         </div>
                     </div>
                     <div class="flex items-center space-x-3">
-                        <button onclick="toggleSlotAlarm(${item.id})" class="px-3 py-1 rounded-xl text-xs font-bold ${item.alarm ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-black/40 text-slate-500'}">
+                        <button onclick="toggleSlotAlarm(${item.id})" class="px-3 py-1.5 rounded-xl text-xs font-bold ${item.alarm ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-slate-900 text-slate-500'}">
                             <i class="fa-solid fa-bell mr-1"></i>${item.alarm ? 'ON' : 'OFF'}
                         </button>
                         <button onclick="deleteSlot(${item.id})" class="text-slate-500 hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
@@ -666,6 +1125,12 @@
             renderSchedule();
         }
 
+        function deleteSlot(id) {
+            schedule = schedule.filter(s => s.id !== id);
+            saveState();
+            renderSchedule();
+        }
+
         function toggleAllAlarms(state) {
             schedule = schedule.map(s => ({ ...s, alarm: state }));
             saveState();
@@ -677,136 +1142,343 @@
 
         function saveSlot(e) {
             e.preventDefault();
-            schedule.push({
-                id: Date.now(),
-                title: document.getElementById('slotTitle').value,
-                start: document.getElementById('slotStart').value,
-                end: document.getElementById('slotEnd').value,
-                category: document.getElementById('slotCat').value,
-                alarm: true,
-                icon: 'fa-book'
-            });
+            const title = document.getElementById('slotTitle').value;
+            const start = document.getElementById('slotStart').value;
+            const end = document.getElementById('slotEnd').value;
+            const category = document.getElementById('slotCat').value;
+
+            schedule.push({ id: Date.now(), title, start, end, category, alarm: true, icon: 'fa-book' });
             saveState();
             renderSchedule();
             closeTimeSlotModal();
         }
 
-        function deleteSlot(id) {
-            schedule = schedule.filter(s => s.id !== id);
-            saveState();
-            renderSchedule();
-        }
-
-        /* Library Logic */
+        /* Study Materials Library Logic */
         function renderMaterials() {
-            const container = document.getElementById('materialsGrid');
-            if (!container) return;
-            container.innerHTML = '';
-            materials.forEach(mat => {
+            const grid = document.getElementById('materialsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            materials.forEach(m => {
                 const card = document.createElement('div');
-                card.className = 'glass-card rounded-2xl p-4 flex flex-col justify-between space-y-3';
-                card.innerHTML = `
-                    <div>
-                        <span class="text-[10px] font-bold uppercase text-peak-gold px-2 py-0.5 rounded bg-peak-gold/10">${mat.subject}</span>
-                        <h4 class="font-bold text-white text-xs font-serif mt-2">${mat.title}</h4>
-                    </div>
-                    <div class="flex items-center justify-between pt-2 border-t border-white/10">
-                        <span class="text-[10px] text-slate-400 font-mono uppercase">${mat.type}</span>
-                        <a href="${mat.url}" target="_blank" class="text-xs text-peak-gold font-bold hover:underline">Open <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
-                    </div>
-                `;
-                container.appendChild(card);
+                card.className = 'glass-card-starlight rounded-2xl p-4 flex flex-col justify-between space-y-3';
+                if (m.type === 'video') {
+                    card.innerHTML = `
+                        <div class="aspect-video w-full rounded-xl overflow-hidden bg-slate-950 border border-white/10">
+                            <iframe class="w-full h-full" src="${m.url}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase text-starlight-gold tracking-widest">${m.subject}</span>
+                                <h4 class="font-bold text-white text-xs mt-0.5">${m.title}</h4>
+                            </div>
+                            <button onclick="deleteResource(${m.id})" class="text-slate-500 hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="p-4 bg-slate-950/60 rounded-xl border border-white/10 flex items-center space-x-3">
+                            <i class="fa-solid fa-file-pdf text-red-400 text-2xl"></i>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase text-starlight-gold">${m.subject}</span>
+                                <h4 class="font-bold text-white text-xs">${m.title}</h4>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center pt-2">
+                            <a href="${m.url}" target="_blank" class="text-xs text-starlight-gold hover:underline font-bold flex items-center space-x-1">
+                                <span>Open PDF Document</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                            <button onclick="deleteResource(${m.id})" class="text-slate-500 hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                }
+                grid.appendChild(card);
             });
         }
 
-        function openResourceModal() {
-            alert('To add a resource, please paste a valid YouTube or PDF URL.');
+        function openResourceModal() { document.getElementById('resourceModal').classList.remove('opacity-0', 'pointer-events-none'); }
+        function closeResourceModal() { document.getElementById('resourceModal').classList.add('opacity-0', 'pointer-events-none'); }
+
+        function saveResource(e) {
+            e.preventDefault();
+            const title = document.getElementById('resTitle').value;
+            const subject = document.getElementById('resSubject').value;
+            const type = document.getElementById('resType').value;
+            const url = document.getElementById('resUrl').value;
+
+            materials.push({ id: Date.now(), title, subject, type, url });
+            saveState();
+            renderMaterials();
+            closeResourceModal();
         }
 
-        /* Goals Logic */
+        function deleteResource(id) {
+            materials = materials.filter(m => m.id !== id);
+            saveState();
+            renderMaterials();
+        }
+
+        /* Goal Setter Logic */
         function renderGoals() {
             const container = document.getElementById('goalsContainer');
             if (!container) return;
             container.innerHTML = '';
-            goals.forEach(goal => {
+
+            goals.forEach(g => {
                 const card = document.createElement('div');
-                card.className = 'glass-card rounded-2xl p-5 space-y-3';
+                card.className = 'glass-card-starlight rounded-2xl p-5 space-y-3';
                 card.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <h4 class="font-bold text-white text-sm font-serif">${goal.title}</h4>
-                        <span class="text-xs font-mono text-peak-gold font-bold">${goal.progress}%</span>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-white text-sm font-serif">${g.title}</h4>
+                            <span class="text-[10px] text-slate-400">Target Deadline: ${g.deadline}</span>
+                        </div>
+                        <button onclick="deleteGoal(${g.id})" class="text-slate-500 hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
                     </div>
-                    <div class="w-full bg-black/50 h-2.5 rounded-full overflow-hidden border border-white/10">
-                        <div class="bg-gradient-to-r from-peak-gold to-emerald-400 h-full transition-all" style="width: ${goal.progress}%"></div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs text-slate-300">
+                            <span>Progress</span>
+                            <span class="font-bold text-starlight-gold">${g.progress}%</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-white/10">
+                            <div class="bg-gradient-to-r from-starlight-lavender to-starlight-gold h-full rounded-full" style="width: ${g.progress}%"></div>
+                        </div>
                     </div>
-                    <p class="text-[10px] text-slate-400">Target Deadline: ${goal.deadline}</p>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function openGoalModal() {
-            const title = prompt('Enter Target Goal Title:');
-            if (title) {
-                goals.push({ id: Date.now(), title, progress: 0, deadline: 'TBD' });
-                saveState();
-                renderGoals();
-            }
+        function openGoalModal() { document.getElementById('goalModal').classList.remove('opacity-0', 'pointer-events-none'); }
+        function closeGoalModal() { document.getElementById('goalModal').classList.add('opacity-0', 'pointer-events-none'); }
+
+        function saveGoal(e) {
+            e.preventDefault();
+            const title = document.getElementById('goalTitle').value;
+            const progress = document.getElementById('goalProgress').value;
+            const deadline = document.getElementById('goalDeadline').value;
+
+            goals.push({ id: Date.now(), title, progress: Number(progress), deadline });
+            saveState();
+            renderGoals();
+            closeGoalModal();
         }
 
-        /* 3D Student Journey Canvas Engine */
-        function init3DRoadmap() {
-            const canvas = document.getElementById('roadmapCanvas');
-            if (!canvas) return;
+        function deleteGoal(id) {
+            goals = goals.filter(g => g.id !== id);
+            saveState();
+            renderGoals();
+        }
+
+        function init3DStarlightScene() {
+            const heroCanvas = document.getElementById('hero3DCanvas');
+            if (!heroCanvas) return;
 
             const scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x07120e, 0.08);
+            const camera = new THREE.PerspectiveCamera(45, heroCanvas.clientWidth / heroCanvas.clientHeight, 0.1, 1000);
+            camera.position.set(0, 0, 4.2);
 
-            const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-            camera.position.set(0, 0, 7);
+            const renderer = new THREE.WebGLRenderer({ canvas: heroCanvas, alpha: true, antialias: true });
+            renderer.setSize(heroCanvas.clientWidth, heroCanvas.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+            scene.add(ambientLight);
 
-            const ambient = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(ambient);
+            const pointLight = new THREE.PointLight(0xfebf24, 2.5, 10);
+            pointLight.position.set(1, 1, 2);
+            scene.add(pointLight);
 
-            const dirLight = new THREE.DirectionalLight(0xf3ca65, 1.2);
-            dirLight.position.set(5, 5, 5);
-            scene.add(dirLight);
+            const HavenGroup = new THREE.Group();
 
-            // Path Ribbon Geometry
-            const points = [
-                new THREE.Vector3(-4, -1, 0),
-                new THREE.Vector3(-1.5, 0.5, 1),
-                new THREE.Vector3(1.5, -0.5, -0.5),
-                new THREE.Vector3(4, 1, 0)
-            ];
-            const curve = new THREE.CatmullRomCurve3(points);
-            const tube = new THREE.Mesh(
-                new THREE.TubeGeometry(curve, 64, 0.1, 8, false),
-                new THREE.MeshStandardMaterial({ color: 0x34d399, roughness: 0.3 })
-            );
-            scene.add(tube);
+            // 1. Create Default High-Quality Starlight Scholar Canvas Texture
+            const textureCanvas = document.createElement('canvas');
+            textureCanvas.width = 1024;
+            textureCanvas.height = 768;
+            const ctx = textureCanvas.getContext('2d');
 
-            // Floating Nodes
-            points.forEach((p, idx) => {
-                const node = new THREE.Mesh(
-                    new THREE.OctahedronGeometry(0.4, 0),
-                    new THREE.MeshStandardMaterial({ color: idx === 2 ? 0xf3ca65 : 0x34d399 })
+            function renderDefaultTexture() {
+                const grad = ctx.createRadialGradient(512, 384, 50, 512, 384, 600);
+                grad.addColorStop(0, '#1e1b4b');
+                grad.addColorStop(0.5, '#0f172a');
+                grad.addColorStop(1, '#060a17');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, 1024, 768);
+
+                // Stars on texture
+                ctx.fillStyle = '#fef08a';
+                for (let i = 0; i < 180; i++) {
+                    const x = Math.random() * 1024;
+                    const y = Math.random() * 500;
+                    const r = Math.random() * 2;
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Desk and Scholar Silhouette Glow
+                ctx.fillStyle = 'rgba(254, 240, 138, 0.25)';
+                ctx.beginPath();
+                ctx.arc(512, 500, 220, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Scholar figure silhouette working at laptop under starlight
+                ctx.fillStyle = '#0f172a';
+                ctx.beginPath();
+                ctx.ellipse(512, 540, 70, 90, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Head
+                ctx.beginPath();
+                ctx.arc(512, 420, 35, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Laptop Screen Glow
+                ctx.fillStyle = '#fef08a';
+                ctx.fillRect(472, 470, 80, 50);
+            }
+            renderDefaultTexture();
+
+            const texture = new THREE.CanvasTexture(textureCanvas);
+            const planeGeo = new THREE.PlaneGeometry(3.6, 2.4);
+            const planeMat = new THREE.MeshStandardMaterial({ 
+                map: texture, 
+                roughness: 0.3,
+                metalness: 0.2
+            });
+            const artCard = new THREE.Mesh(planeGeo, planeMat);
+            artCard.position.z = -0.3;
+            HavenGroup.add(artCard);
+
+            // 2. Volumetric Floating 3D Starfield
+            const starGeo = new THREE.BufferGeometry();
+            const starCount = 200;
+            const starPositions = new Float32Array(starCount * 3);
+            for (let i = 0; i < starCount * 3; i++) {
+                starPositions[i] = (Math.random() - 0.5) * 8;
+            }
+            starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            const starMat = new THREE.PointsMaterial({ color: 0xfef08a, size: 0.04, transparent: true, opacity: 0.9 });
+            const starField = new THREE.Points(starGeo, starMat);
+            HavenGroup.add(starField);
+
+            // 3. Floating 3D Book Objects for Layered Parallax
+            const bookGroup = new THREE.Group();
+            const bookColors = [0xc084fc, 0xfebf24, 0x334155, 0xfef08a];
+            for (let i = 0; i < 5; i++) {
+                const bGeo = new THREE.BoxGeometry(0.35, 0.06, 0.25);
+                const bMat = new THREE.MeshStandardMaterial({ color: bookColors[i % bookColors.length] });
+                const book = new THREE.Mesh(bGeo, bMat);
+                book.position.set(
+                    (i % 2 === 0 ? -1.4 : 1.4) + (Math.random() * 0.2 - 0.1),
+                    -0.7 + i * 0.12,
+                    0.2 + (i * 0.08)
                 );
-                node.position.copy(p);
-                scene.add(node);
+                book.rotation.y = (Math.random() - 0.5) * 0.4;
+                bookGroup.add(book);
+            }
+            HavenGroup.add(bookGroup);
+
+            scene.add(HavenGroup);
+
+            // Mouse Move 3D Depth Parallax & Drag Logic
+            let mouseX = 0, mouseY = 0;
+            let isDragging = false;
+            let prevX = 0, prevY = 0;
+
+            heroCanvas.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                prevX = e.clientX;
+                prevY = e.clientY;
+            });
+
+            window.addEventListener('mouseup', () => isDragging = false);
+
+            heroCanvas.addEventListener('mousemove', (e) => {
+                const rect = heroCanvas.getBoundingClientRect();
+                mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                mouseY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+
+                if (isDragging) {
+                    const dx = e.clientX - prevX;
+                    const dy = e.clientY - prevY;
+                    HavenGroup.rotation.y += dx * 0.008;
+                    HavenGroup.rotation.x += dy * 0.008;
+                    prevX = e.clientX;
+                    prevY = e.clientY;
+                }
             });
 
             function animate() {
                 requestAnimationFrame(animate);
+                if (!isDragging) {
+                    // Smooth Parallax Interpolation
+                    HavenGroup.rotation.y += (mouseX * 0.35 - HavenGroup.rotation.y) * 0.05;
+                    HavenGroup.rotation.x += (-mouseY * 0.25 - HavenGroup.rotation.x) * 0.05;
+                }
+                
+                starField.rotation.y += 0.001;
+                bookGroup.children.forEach((b, idx) => {
+                    b.position.y += Math.sin(Date.now() * 0.002 + idx) * 0.0005;
+                });
+
                 renderer.render(scene, camera);
             }
             animate();
+
+            // Expose function to update texture dynamically via Gemini AI
+            window.update3DTexture = function(imageUrl) {
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.onload = () => {
+                    const newTex = new THREE.Texture(img);
+                    newTex.needsUpdate = true;
+                    planeMat.map = newTex;
+                    planeMat.needsUpdate = true;
+                };
+                img.src = imageUrl;
+            };
         }
 
-        /* Gemini AI Tutor Logic */
+        /* Gemini AI 3D Image Generator Function */
+        async function generateAI3DScene() {
+            const loader = document.getElementById('ai3DLoading');
+            if (loader) loader.classList.remove('hidden');
+
+            const prompt = "A high-fidelity 3D artwork of a student deeply focused on a glowing laptop at a desk surrounded by glowing wildflowers and tall stacks of ancient books under a starry night sky with warm cozy lighting, lunora aesthetic, 3d render masterpiece";
+
+            try {
+                const apiKey = ""; // Canvas runtime auto-fills key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: {
+                            responseModalities: ['IMAGE'],
+                            imageConfig: { aspectRatio: "16:9" }
+                        }
+                    })
+                });
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+
+                if (part && window.update3DTexture) {
+                    const imgUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+                    window.update3DTexture(imgUrl);
+                }
+            } catch (err) {
+                console.log("3D AI Generation fallback:", err);
+            } finally {
+                if (loader) loader.classList.add('hidden');
+            }
+        }
+
+        /* Gemini AI Assistant Modal Logic */
         function openGeminiModal() { document.getElementById('geminiModal').classList.remove('opacity-0', 'pointer-events-none'); }
         function closeGeminiModal() { document.getElementById('geminiModal').classList.add('opacity-0', 'pointer-events-none'); }
 
@@ -819,19 +1491,19 @@
             const log = document.getElementById('geminiChatLog');
             
             const userBox = document.createElement('div');
-            userBox.className = 'bg-peak-gold/20 border border-peak-gold/30 p-3 rounded-2xl max-w-[85%] text-white ml-auto text-right';
+            userBox.className = 'bg-starlight-gold/20 border border-starlight-gold/30 p-3 rounded-2xl max-w-[85%] text-white ml-auto text-right';
             userBox.innerText = txt;
             log.appendChild(userBox);
 
             input.value = '';
 
             const aiBox = document.createElement('div');
-            aiBox.className = 'bg-black/40 border border-white/10 p-3 rounded-2xl max-w-[85%] text-peak-gold';
-            aiBox.innerText = '🏔️ Gemini AI Tutor is generating insight...';
+            aiBox.className = 'bg-slate-900 border border-white/10 p-3 rounded-2xl max-w-[85%] text-starlight-gold';
+            aiBox.innerText = '🌙 Gemini AI Partner is contemplating...';
             log.appendChild(aiBox);
 
             setTimeout(() => {
-                aiBox.innerText = `💡 Study Peak Guidance for "${txt}": Breakdown your revision into 30-minute intervals followed by active recall practice notes!`;
+                aiBox.innerText = `💡 Study Peak Starlight Guidance for "${txt}": Breakdown your revision into 25-minute Pomodoro focus windows followed by 5 minutes of active recall under quiet surroundings!`;
             }, 1000);
         }
 
@@ -851,7 +1523,7 @@
                 type: 'bar',
                 data: {
                     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    datasets: [{ data: [6, 7.5, 5, 8, 6.5, 9, 7], backgroundColor: '#f3ca65', borderRadius: 8 }]
+                    datasets: [{ data: [6, 7.5, 5, 8, 6.5, 9, 7], backgroundColor: '#fef08a', borderRadius: 8 }]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
             });
@@ -860,7 +1532,7 @@
                 type: 'doughnut',
                 data: {
                     labels: ['Physics', 'Maths', 'Chemistry'],
-                    datasets: [{ data: [45, 35, 20], backgroundColor: ['#f3ca65', '#34d399', '#ef4444'] }]
+                    datasets: [{ data: [45, 35, 20], backgroundColor: ['#fef08a', '#c084fc', '#ef4444'] }]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
             });
@@ -868,7 +1540,7 @@
 
         function saveProfile(e) {
             e.preventDefault();
-            alert('Profile settings saved successfully!');
+            alert('Scholar profile preferences saved successfully!');
         }
     </script>
 </body>
